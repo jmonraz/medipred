@@ -36,6 +36,25 @@ const LoginForm = () => {
         // submit the form if inputs are valid
         if (username && password) {
             console.log('submit form');
+
+            // make API request
+            fetch('http://127.0.0.1:8080/api/v1/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username,
+                    password,
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('API response:', data);
+                })
+                .catch(error => {
+                    console.log('API error:', error);
+                })
             // reset form
             setUsername('');
             setPassword('');
@@ -51,8 +70,8 @@ const LoginForm = () => {
             {/* {isUsernameEmpty && <span className="error-message">Username is required</span>} */}
             <InputField id="password" type="password" placeholder="Password" value={password} onChange={handlePasswordChange} required />
             {/* {isPasswordEmpty && <span className="error-message">Password is required</span>} */}
-            <FormButton type="submit">Login</FormButton>
-            <FormButton type="submit">Change Password</FormButton>
+            <FormButton type="submit" handleSubmit={handleSubmit}>Login</FormButton>
+            <FormButton type="submit" handleSubmit={handleSubmit}>Change Password</FormButton>
         </form>
     );
 }

@@ -1,10 +1,10 @@
 import React from "react";
 import './FormButton.css'
 
-const FormButton = ({ type, children }) => {
+const FormButton = ({ type, children, handleSubmit }) => {
     return (
         <div>
-            <button className="form-button" type={type}>{children}</button>
+            <button className="form-button" type={type} onClick={handleSubmit}>{children}</button>
         </div>
     );
 }
