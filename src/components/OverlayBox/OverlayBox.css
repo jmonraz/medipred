@@ -1,0 +1,8 @@
+.overlay-box {
+    width: 100%;
+    margin: 55px 10px 10px 10px;
+    background-color: #F3F4F2;
+    border-radius: 10px;
+    padding: 25px 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
