@@ -6,13 +6,16 @@ import Menu from "../Menu";
 
 const Dashboard = () => {
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const menuRef = useRef(null);
+    const hamburgerMenuItems = ["Patients", "Appointments", "Diseases", "Analytics", "Roles", "Help"];
+    const userMenuItems = ["Change Password", "About", "Logout"];
 
     useEffect(() => {
         const handleOutsideClick = event => {
             if (menuRef.current && !menuRef.current.contains(event.targe)) {
-                setIsMenuOpen(false);
+                setIsHamburgerMenuOpen(false);
             }
         };
 
@@ -24,13 +27,23 @@ const Dashboard = () => {
 
     }, []);
 
-    const handleToggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
+    const handleToggleHamburgerMenu = () => {
+        setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
+        if (isUserMenuOpen) {
+            setIsUserMenuOpen(!isUserMenuOpen);
+        }
+    }
+    const handleToggleUserMenu = () => {
+        setIsUserMenuOpen(!isUserMenuOpen);
+        if (isHamburgerMenuOpen) {
+            setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
+        }
     }
     return (
         <div className="dashboard">
-            <Banner onToggleMenu={handleToggleMenu} />
-            {isMenuOpen && <Menu />}
+            <Banner onToggleHamburgerMenu={handleToggleHamburgerMenu} onToggleUserMenu={handleToggleUserMenu} />
+            {isHamburgerMenuOpen && <Menu menuItems={hamburgerMenuItems} position="start" />}
+            {isUserMenuOpen && <Menu menuItems={userMenuItems} position="end" />}
             <OverlayBox />
         </ div>
     )

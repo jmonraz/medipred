@@ -1,4 +1,4 @@
-.menu-container {
+/* .menu-container {
     position: fixed;
     top: 40px;
     left: 20px;
@@ -6,6 +6,10 @@
     background-color: #1D3557;
     z-index: 999;
     transition: transform 0.3s ease-in-out;
+} */
+
+.menu-container {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .menu-container ul {
@@ -31,4 +35,24 @@
 
 .menu-container.closed {
     transform: translateX(-100%);
+}
+
+.menu-container.start {
+    position: fixed;
+    top: 40px;
+    left: 20px;
+    width: auto;
+    background-color: #1D3557;
+    z-index: 999;
+    transition: transform 0.3s ease-in-out;
+}
+
+.menu-container.end {
+    position: fixed;
+    top: 40px;
+    right: 20px;
+    width: auto;
+    background-color: #1D3557;
+    z-index: 999;
+    transition: transform 0.3s ease-in-out;
 }

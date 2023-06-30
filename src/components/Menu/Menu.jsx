@@ -1,15 +1,16 @@
 import React from "react";
 import "./Menu.css";
 
-const Menu = ({ isMenuOpen, menuRef }) => {
+const Menu = ({ isMenuOpen, menuRef, menuItems, position }) => {
+    const menuContainerClass = `menu-container ${position}`;
     return (
-        <div className="menu-container">
+        <div className={menuContainerClass}>
             <ul>
-                <li>Patients</li>
-                <li>Appointments</li>
-                <li>Diseases</li>
-                <li>Analytics</li>
-                <li>Roles</li>
+                {menuItems.map((item, index) => {
+                    return (
+                        <li key={index}>{item}</li>
+                    )
+                })}
             </ul>
         </div>
     )
