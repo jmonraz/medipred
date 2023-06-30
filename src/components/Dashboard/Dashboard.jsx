@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import './Dashboard.css';
 import Banner from "../Banner";
 import OverlayBox from "../OverlayBox";
+import GraphBox from "../GraphBox";
 import Menu from "../Menu";
 import { UserContext } from "../../contexts/UserContext";
 
@@ -12,7 +13,7 @@ const Dashboard = () => {
     const { updateUser, updateAuthenticated, authenticated, user } = useContext(UserContext);
     const menuRef = useRef(null);
     const hamburgerMenuItems = ["Patients", "Appointments", "Diseases", "Analytics", "Roles", "Help"];
-    const userMenuItems = ["Change Password", "About", "Logout"];
+    const userMenuItems = [`User: ${user.username}`, `Email: ${user.email}`, "Change Password", "About", "Logout"];
 
     useEffect(() => {
         const handleOutsideClick = event => {
@@ -53,7 +54,14 @@ const Dashboard = () => {
             <Banner onToggleHamburgerMenu={handleToggleHamburgerMenu} onToggleUserMenu={handleToggleUserMenu} />
             {isHamburgerMenuOpen && <Menu menuItems={hamburgerMenuItems} position="start" onClick={handleMenuItemClick} />}
             {isUserMenuOpen && <Menu menuItems={userMenuItems} position="end" onClick={handleMenuItemClick} />}
-            <OverlayBox />
+            <OverlayBox><div className="flex-box">
+                <GraphBox>GRAPH 1</GraphBox>
+                <GraphBox>GRAPH 2</GraphBox>
+            </div>
+                <div className="flex-box">
+                    {/*code here for table*/}
+                    <GraphBox>GRAPH 3</GraphBox>
+                </div></OverlayBox>
         </ div>
     )
 }
