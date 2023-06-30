@@ -1,13 +1,16 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import InputField from "../InputField";
 import FormButton from "../FormButton";
+import { UserContext } from "../../contexts/UserContext";
 import './LoginForm.css';
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginMessage, setLoginMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const formRef = useRef(null);
+    const { updateUser } = useContext(UserContext);
 
     const handleUsernameChange = event => {
         setUsername(event.target.value);
@@ -28,8 +31,11 @@ const LoginForm = () => {
             event.preventDefault();
             console.log('submit form');
 
+            // set loading state to true
+            setIsLoading(true);
+
             // make API request
-            fetch('http://127.0.0.1:8080/api/v1/login/', {
+            fetch('http://127.0.0.1:8000/api/v1/login/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,21 +48,28 @@ const LoginForm = () => {
                 .then(response => response.json())
                 .then(data => {
                     console.log('API response:', data);
-                    if (data.message == 'User logged in failed') {
+                    if (data.message === 'User logged in failed') {
                         setLoginMessage('Invalid username or password entered.');
+                        updateUser(null);
                     } else {
                         setLoginMessage('');
+                        // update user state in UserContext
+                        updateUser(data.user);
                         formRef.current.submit();
+                        console.log(data.user);
                     }
                     // reset form
                     setUsername('');
                     setPassword('');
-                    setIsUsernameEmpty(false);
-                    setIsPasswordEmpty(false);
+                    // set loading state to false after response is received
+                    setIsLoading(false);
                 })
                 .catch(error => {
                     console.log('API error:', error);
                     setLoginMessage('An error occurred. Please try again later.');
+                    // set loading state to false in case of error
+                    setIsLoading(false);
+                    updateUser(null);
                 })
 
         }
@@ -70,8 +83,9 @@ const LoginForm = () => {
             <InputField id="password" type="password" placeholder="Password" value={password} onChange={handlePasswordChange} required />
             {/* {isPasswordEmpty && <span className="error-message">Password is required</span>} */}
             {loginMessage && <span className="error-message">{loginMessage}</span>}
-            <FormButton type="submit" handleSubmit={handleSubmit}>Login</FormButton>
-            <FormButton type="submit" handleSubmit={handleSubmit}>Change Password</FormButton>
+            <FormButton type="submit" handleSubmit={handleSubmit} disabled={isLoading}>Login</FormButton>
+            <FormButton type="submit" handleSubmit={handleSubmit} disabled={isLoading}>Change Password</FormButton>
+            {isLoading && <div className="loading-indicator">Loading...</div>}
         </form>
     );
 }
