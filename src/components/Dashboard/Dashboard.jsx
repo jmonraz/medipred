@@ -4,6 +4,7 @@ import Banner from "../Banner";
 import OverlayBox from "../OverlayBox";
 import GraphBox from "../GraphBox";
 import Menu from "../Menu";
+import AnalyticsScreen from "../AnalyticsScreen";
 import { UserContext } from "../../contexts/UserContext";
 
 const Dashboard = () => {
@@ -62,7 +63,7 @@ const Dashboard = () => {
     const renderComponent = () => {
         switch (selectedMenuItem) {
             case 'Analytics':
-                return <div></div>;
+                return <AnalyticsScreen />;
             default:
                 return (
                     <>
