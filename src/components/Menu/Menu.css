@@ -27,6 +27,7 @@
 .menu-container ul li:hover {
     background-color: #2f425e;
     color: #d2d0d0;
+    font-size: 11px;
 }
 
 .menu-container.open {
