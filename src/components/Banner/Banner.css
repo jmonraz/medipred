@@ -28,3 +28,11 @@
     font-size: 30px;
     font-weight: bold;
 }
+
+#hamburger-menu {
+    cursor: pointer;
+}
+
+#user-icon {
+    cursor: pointer;
+}

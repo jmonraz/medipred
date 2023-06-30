@@ -8,11 +8,11 @@ const Banner = () => {
         <div className="banner-container">
             <ul className="menu-items">
                 <div>
-                    <li><img src={hamburgerIcon} alt="hamburger_icon" width="30px" height="35px" /></li>
+                    <li id="hamburger-menu"><img src={hamburgerIcon} alt="hamburger_icon" width="30px" height="35px" /></li>
                     <li id="header-title">MediPred©</li>
                 </div>
                 <div>
-                    <li><img src={userIcon} alt="user_icon" width="30px" /></li>
+                    <li id="user-icon"><img src={userIcon} alt="user_icon" width="30px" /></li>
                 </div>
             </ul>
         </div>
