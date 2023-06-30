@@ -7,7 +7,15 @@ const AnalyticsScreen = () => {
 
     return (
         <div className="analytics-screen">
-            <BoxItem>Diabetes</BoxItem>
+            <div className="flex-box">
+                <BoxItem>Diabetes</BoxItem>
+                <BoxItem>Heart</BoxItem>
+                <BoxItem>Cancer</BoxItem>
+                <BoxItem>Alzheimer's</BoxItem>
+            </div>
+            <div className="flex-box">
+                <BoxItem>Mental Health</BoxItem>
+            </div>
         </div>
     )
 }
