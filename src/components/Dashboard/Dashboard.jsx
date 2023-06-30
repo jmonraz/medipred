@@ -10,6 +10,7 @@ const Dashboard = () => {
 
     const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+    const [selectedMenuItem, setSelectedMenuItem] = useState(false);
     const { updateUser, updateAuthenticated, authenticated, user } = useContext(UserContext);
     const menuRef = useRef(null);
     const hamburgerMenuItems = ["Patients", "Appointments", "Diseases", "Analytics", "Roles", "Help"];
@@ -44,9 +45,38 @@ const Dashboard = () => {
     }
     const handleMenuItemClick = async item => {
         console.log("Clicked item:", item.target.innerText);
+        setSelectedMenuItem(item.target.innerText);
+        if (isHamburgerMenuOpen) {
+            setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
+        }
+        if (isUserMenuOpen) {
+            setIsUserMenuOpen(!setIsUserMenuOpen);
+        }
+
         if (item.target.innerText === 'Logout') {
             updateAuthenticated(false);
             updateUser(false);
+        }
+    }
+
+    const renderComponent = () => {
+        switch (selectedMenuItem) {
+            case 'Analytics':
+                return <div></div>;
+            default:
+                return (
+                    <>
+                        <div className="flex-box">
+                            <GraphBox>GRAPH 1</GraphBox>
+                            <GraphBox>GRAPH 2</GraphBox>
+                        </div>
+                        <div className="flex-box">
+                            {/*code here for table*/}
+                            <GraphBox>GRAPH 3</GraphBox>
+                        </div>
+                    </>
+                );
+
         }
     }
     return (
@@ -54,14 +84,9 @@ const Dashboard = () => {
             <Banner onToggleHamburgerMenu={handleToggleHamburgerMenu} onToggleUserMenu={handleToggleUserMenu} />
             {isHamburgerMenuOpen && <Menu menuItems={hamburgerMenuItems} position="start" onClick={handleMenuItemClick} />}
             {isUserMenuOpen && <Menu menuItems={userMenuItems} position="end" onClick={handleMenuItemClick} />}
-            <OverlayBox><div className="flex-box">
-                <GraphBox>GRAPH 1</GraphBox>
-                <GraphBox>GRAPH 2</GraphBox>
-            </div>
-                <div className="flex-box">
-                    {/*code here for table*/}
-                    <GraphBox>GRAPH 3</GraphBox>
-                </div></OverlayBox>
+            <OverlayBox>
+                {renderComponent()}
+            </OverlayBox>
         </ div>
     )
 }
