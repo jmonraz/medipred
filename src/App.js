@@ -1,18 +1,28 @@
-import React from "react";
-import MainButton from "./components/MainButton";
-import SmallButton from "./components/SmallButton";
-import InputField from "./components/InputField";
+import React, { useState } from "react";
 import LoginForm from "./components/LoginForm";
 import { UserProvider } from "./contexts/UserContext";
+import Dashboard from "./components/Dashboard/Dashboard";
 import './App.css'
 
 const App = () => {
+
+  const [authenticated, setAuthenticated] = useState(false);
+  console.log(authenticated);
+
+  const handleAuthentication = (authenticated) => {
+    setAuthenticated(authenticated);
+  }
+
 
   return (
     <UserProvider>
       <div className="app-container">
         <h1 id="logo-title">MediPred</h1>
-        <LoginForm />
+        {authenticated ? (
+          <Dashboard />
+        ) : (
+          <LoginForm handleAuthentication={handleAuthentication} />
+        )}
       </div>
     </UserProvider>
   );

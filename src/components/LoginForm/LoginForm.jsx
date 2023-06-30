@@ -4,12 +4,12 @@ import FormButton from "../FormButton";
 import { UserContext } from "../../contexts/UserContext";
 import './LoginForm.css';
 
-const LoginForm = () => {
+const LoginForm = ({ handleAuthentication }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginMessage, setLoginMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const formRef = useRef(null);
+    // const formRef = useRef(null);
     const { updateUser } = useContext(UserContext);
 
     const handleUsernameChange = event => {
@@ -20,7 +20,7 @@ const LoginForm = () => {
         setPassword(event.target.value);
     };
 
-    const handleSubmit = event => {
+    const handleSubmit = async event => {
 
         console.log('username: ', username);
         console.log('password: ', password);
@@ -33,51 +33,53 @@ const LoginForm = () => {
 
             // set loading state to true
             setIsLoading(true);
+            try {
+                // make API request
+                const response = await fetch('http://127.0.0.1:8000/api/v1/login/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username,
+                        password,
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('API response:', data);
+                        if (data.message === 'User logged in failed') {
+                            setLoginMessage('Invalid username or password entered.');
+                            updateUser(null);
+                        } else {
+                            setLoginMessage('');
+                            // update user state in UserContext
+                            // formRef.current.submit();
+                            updateUser(data.user);
+                            handleAuthentication(true);
 
-            // make API request
-            fetch('http://127.0.0.1:8000/api/v1/login/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username,
-                    password,
-                }),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('API response:', data);
-                    if (data.message === 'User logged in failed') {
-                        setLoginMessage('Invalid username or password entered.');
-                        updateUser(null);
-                    } else {
-                        setLoginMessage('');
-                        // update user state in UserContext
-                        updateUser(data.user);
-                        formRef.current.submit();
-                        console.log(data.user);
-                    }
-                    // reset form
-                    setUsername('');
-                    setPassword('');
-                    // set loading state to false after response is received
-                    setIsLoading(false);
-                })
-                .catch(error => {
-                    console.log('API error:', error);
-                    setLoginMessage('An error occurred. Please try again later.');
-                    // set loading state to false in case of error
-                    setIsLoading(false);
-                    updateUser(null);
-                })
+                        }
+                        // reset form
+                        setUsername('');
+                        setPassword('');
+                        // set loading state to false after response is received
+                        setIsLoading(false);
+                    })
+            }
+            catch (error) {
+                console.log('API error:', error);
+                setLoginMessage('An error occurred. Please try again later.');
+                // set loading state to false in case of error
+                setIsLoading(false);
+                updateUser(null);
+            }
 
         }
 
 
     }
     return (
-        <form onSubmit={handleSubmit} className="login-form" ref={formRef}>
+        <form onSubmit={handleSubmit} className="login-form" /*ref={formRef}*/>
             <InputField id="username" type="username" placeholder="Username" value={username} onChange={handleUsernameChange} required />
             {/* {isUsernameEmpty && <span className="error-message">Username is required</span>} */}
             <InputField id="password" type="password" placeholder="Password" value={password} onChange={handlePasswordChange} required />
