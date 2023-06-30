@@ -3,12 +3,12 @@ import "./Banner.css"
 import hamburgerIcon from "../../assets/images/icons/hamburger_menu_icon_white.png";
 import userIcon from "../../assets/images/icons/user_icon_white.png";
 
-const Banner = () => {
+const Banner = ({ onToggleMenu }) => {
     return (
         <div className="banner-container">
             <ul className="menu-items">
                 <div>
-                    <li id="hamburger-menu"><img src={hamburgerIcon} alt="hamburger_icon" width="30px" height="35px" /></li>
+                    <li id="hamburger-menu" onClick={onToggleMenu}><img src={hamburgerIcon} alt="hamburger_icon" width="30px" height="35px" /></li>
                     <li id="header-title">MediPred©</li>
                 </div>
                 <div>

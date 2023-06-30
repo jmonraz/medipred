@@ -1,0 +1,34 @@
+.menu-container {
+    position: fixed;
+    top: 40px;
+    left: 20px;
+    width: auto;
+    background-color: #1D3557;
+    z-index: 999;
+    transition: transform 0.3s ease-in-out;
+}
+
+.menu-container ul {
+    list-style: none;
+}
+
+.menu-container ul li {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.menu-container ul li:hover {
+    background-color: #2f425e;
+    color: #d2d0d0;
+}
+
+.menu-container.open {
+    transform: translateX(0);
+}
+
+.menu-container.closed {
+    transform: translateX(-100%);
+}
