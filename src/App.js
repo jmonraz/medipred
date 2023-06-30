@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import LoginForm from "./components/LoginForm";
 import { UserProvider } from "./contexts/UserContext";
 import Dashboard from "./components/Dashboard/Dashboard";
+import { UserContext } from "./contexts/UserContext";
 import './App.css'
 
 const App = () => {
 
-  const [authenticated, setAuthenticated] = useState(false);
+  // const [authenticated, setAuthenticated] = useState(false);
+  const { authenticated } = useContext(UserContext);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   console.log(authenticated);
 
   useEffect(() => {
@@ -17,21 +20,19 @@ const App = () => {
     }
   }, [authenticated]);
 
-  const handleAuthentication = (authenticated) => {
-    setAuthenticated(authenticated);
+  const handleFormSubmit = () => {
+    setFormSubmitted(true);
   }
 
 
   return (
-    <UserProvider>
-      <div className="app-container">
-        {authenticated ? (
-          <Dashboard />
-        ) : (
-          <LoginForm handleAuthentication={handleAuthentication} />
-        )}
-      </div>
-    </UserProvider>
+    <div className="app-container">
+      {authenticated ? (
+        <Dashboard />
+      ) : (
+        <LoginForm onFormSubmit={handleFormSubmit} />
+      )}
+    </div>
   );
 }
 

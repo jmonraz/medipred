@@ -1,11 +1,12 @@
 .login-form {
     max-width: 400px;
     width: 100%;
-    background-color: #DAFFFB;
+    background-color: #e3e1e1;
     margin: 0 auto;
     padding: 40px 25px;
     border-radius: 5px;
     text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .login-form input {
@@ -19,6 +20,7 @@
 }
 
 .loading-indicator {
+    margin-top: 10px;
     display: flex;
     align-items: center;
     justify-content: center;

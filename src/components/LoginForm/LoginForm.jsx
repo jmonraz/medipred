@@ -4,13 +4,13 @@ import FormButton from "../FormButton";
 import { UserContext } from "../../contexts/UserContext";
 import './LoginForm.css';
 
-const LoginForm = ({ handleAuthentication }) => {
+const LoginForm = ({ onFormSubmit }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginMessage, setLoginMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     // const formRef = useRef(null);
-    const { updateUser } = useContext(UserContext);
+    const { updateUser, updateAuthenticated, authenticated } = useContext(UserContext);
 
     const handleUsernameChange = event => {
         setUsername(event.target.value);
@@ -56,7 +56,8 @@ const LoginForm = ({ handleAuthentication }) => {
                             // update user state in UserContext
                             // formRef.current.submit();
                             updateUser(data.user);
-                            handleAuthentication(true);
+                            updateAuthenticated(true);
+                            console.log('form: ', authenticated)
 
                         }
                         // reset form
@@ -73,7 +74,6 @@ const LoginForm = ({ handleAuthentication }) => {
                 setIsLoading(false);
                 updateUser(null);
             }
-
         }
 
 
@@ -92,7 +92,6 @@ const LoginForm = ({ handleAuthentication }) => {
                 {isLoading && <div className="loading-indicator">Loading...</div>}
             </form>
         </>
-
     );
 }
 
