@@ -8,16 +8,6 @@ import './App.css'
 
 const App = () => {
 
-  const [counter, setCounter] = React.useState(0);
-
-  const onClickHandler = event => {
-    setCounter(prevCounter => prevCounter + 1);
-  }
-
-  const onClickResetHandler = event => {
-    setCounter(0);
-  }
-
   return (
     <UserProvider>
       <div className="app-container">
