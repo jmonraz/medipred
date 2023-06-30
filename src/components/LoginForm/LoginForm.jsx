@@ -79,16 +79,20 @@ const LoginForm = ({ handleAuthentication }) => {
 
     }
     return (
-        <form onSubmit={handleSubmit} className="login-form" /*ref={formRef}*/>
-            <InputField id="username" type="username" placeholder="Username" value={username} onChange={handleUsernameChange} required />
-            {/* {isUsernameEmpty && <span className="error-message">Username is required</span>} */}
-            <InputField id="password" type="password" placeholder="Password" value={password} onChange={handlePasswordChange} required />
-            {/* {isPasswordEmpty && <span className="error-message">Password is required</span>} */}
-            {loginMessage && <span className="error-message">{loginMessage}</span>}
-            <FormButton type="submit" handleSubmit={handleSubmit} disabled={isLoading}>Login</FormButton>
-            <FormButton type="submit" handleSubmit={handleSubmit} disabled={isLoading}>Change Password</FormButton>
-            {isLoading && <div className="loading-indicator">Loading...</div>}
-        </form>
+        <>
+            <h1 id="logo-title">MediPred</h1>
+            <form onSubmit={handleSubmit} className="login-form" /*ref={formRef}*/>
+                <InputField id="username" type="username" placeholder="Username" value={username} onChange={handleUsernameChange} required />
+                {/* {isUsernameEmpty && <span className="error-message">Username is required</span>} */}
+                <InputField id="password" type="password" placeholder="Password" value={password} onChange={handlePasswordChange} required />
+                {/* {isPasswordEmpty && <span className="error-message">Password is required</span>} */}
+                {loginMessage && <span className="error-message">{loginMessage}</span>}
+                <FormButton type="submit" handleSubmit={handleSubmit} disabled={isLoading}>Login</FormButton>
+                <FormButton type="submit" handleSubmit={handleSubmit} disabled={isLoading}>Change Password</FormButton>
+                {isLoading && <div className="loading-indicator">Loading...</div>}
+            </form>
+        </>
+
     );
 }
 

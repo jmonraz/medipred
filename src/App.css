@@ -16,14 +16,6 @@ body {
   height: 100vh;
 }
 
-#title-header {
-  font-size: 40px;
-  color: grey;
-  line-height: 1.8em;
-}
-
-#logo-title {
-  font-size: 40px;
-  color: #A2FF86;
-  margin-bottom: 20px;
+.body-authenticated {
+  background-color: #D0D3CF;
 }
