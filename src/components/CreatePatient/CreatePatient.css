@@ -1,0 +1,30 @@
+.form-container {
+    padding: 25px;
+    overflow-x: auto;
+    width: 100%;
+    height: 100%;
+    white-space: nowrap;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-around;
+}
+
+.form-col {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 15px 25px;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 6px;
+    margin: 2px 0px;
+}
+
+.form-sub {
+    font-size: 14px;
+    font-weight: bold;
+}

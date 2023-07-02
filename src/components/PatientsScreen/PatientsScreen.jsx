@@ -2,6 +2,7 @@ import React from "react";
 import "./PatientsScreen.css";
 import ButtonsRow from "../ButtonsRow";
 import CustomTable from "../CustomTable";
+import CreatePatient from "../CreatePatient";
 import addIcon from "../../assets/images/icons/add_icon_green.png";
 import editIcon from "../../assets/images/icons/edit_icon_orange.png";
 import blockIcon from "../../assets/images/icons/block_icon_red.png";
@@ -10,6 +11,12 @@ import excelIcon from "../../assets/images/icons/excel_icon_green.png";
 import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
 
 const PatientsScreen = () => {
+
+    const [selectedMenuItem, setSelectedMenuItem] = React.useState(false);
+
+    const handleMenuItemClick = item => {
+        setSelectedMenuItem(item);
+    }
 
     const buttons = [
         { 'icon': addIcon, 'label': 'add' },
@@ -28,10 +35,35 @@ const PatientsScreen = () => {
         ['Insi qoaksdj', 30, 607, 123020, 'BSJDHKS', '012/123/39943', '01203/1222/12321'],
         ['Insuspdsuaaaaaaaaa', 30, 40, 10, 'asdasdsadjlasjdlkasjdljsalda', 'asdhjashdjlashdjsahjdhaskdsa', 'ajsldhajslhdjalshdashdjhsajkdhsahdjahdkhsjdhjkahdks']
     ];
+
+    const renderComponent = () => {
+        switch (selectedMenuItem) {
+            case 'add':
+                return <CreatePatient />
+            case 'edit':
+                return <div></div>
+            case 'block':
+                return <div></div>
+            case 'search':
+                return <div></div>
+            case 'excel':
+                return <div></div>
+            case 'adobe':
+                return <div></div>
+            default:
+                return (
+                    <>
+                        <ButtonsRow buttons={buttons} width={20} onClick={handleMenuItemClick} />
+                        <CustomTable data={data} columns={columns} />
+                    </>
+                );
+
+        }
+    }
+
     return (
         <>
-            <ButtonsRow buttons={buttons} width={20} />
-            <CustomTable data={data} columns={columns} />
+            {renderComponent()}
         </>
     )
 }
