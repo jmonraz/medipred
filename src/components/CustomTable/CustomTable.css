@@ -1,0 +1,39 @@
+.custom-table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 5px 5px 0px 0px;
+    overflow: hidden;
+    margin: 5px 0px;
+    table-layout: auto;
+}
+
+.custom-table th,
+.custom-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.custom-table td {
+    cursor: pointer;
+}
+
+.custom-table th {
+    background-color: #457B9D;
+    font-weight: bold;
+}
+
+.custom-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #e9e9e9;
+}
