@@ -5,6 +5,7 @@ import OverlayBox from "../OverlayBox";
 import GraphBox from "../GraphBox";
 import Menu from "../Menu";
 import AnalyticsScreen from "../AnalyticsScreen";
+import PatientsScreen from "../PatientsScreen";
 import { UserContext } from "../../contexts/UserContext";
 
 const Dashboard = () => {
@@ -12,7 +13,7 @@ const Dashboard = () => {
     const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [selectedMenuItem, setSelectedMenuItem] = useState(false);
-    const { updateUser, updateAuthenticated, authenticated, user } = useContext(UserContext);
+    const { updateUser, updateAuthenticated, user } = useContext(UserContext);
     const menuRef = useRef(null);
     const hamburgerMenuItems = ["Patients", "Appointments", "Diseases", "Analytics", "Roles", "Help"];
     const userMenuItems = [`User: ${user.username}`, `Email: ${user.email}`, "Change Password", "About", "Logout"];
@@ -64,6 +65,8 @@ const Dashboard = () => {
         switch (selectedMenuItem) {
             case 'Analytics':
                 return <AnalyticsScreen />;
+            case 'Patients':
+                return <PatientsScreen />;
             default:
                 return (
                     <>

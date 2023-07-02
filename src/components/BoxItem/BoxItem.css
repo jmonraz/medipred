@@ -18,3 +18,7 @@
     cursor: pointer;
     font-size: 19px;
 }
+
+.box-item:active {
+    background-color: rgb(221, 227, 232);
+}
