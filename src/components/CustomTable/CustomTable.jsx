@@ -19,7 +19,6 @@ const CustomTable = ({ data, columns }) => {
                     {arrayToMap.map((patient, index) => {
                         console.log(patient, index);
                         return (
-
                             <tr key={index}>
                                 {Object.values(patient).map((value, valueIndex) => (
                                     <td key={valueIndex}>{value}</td>

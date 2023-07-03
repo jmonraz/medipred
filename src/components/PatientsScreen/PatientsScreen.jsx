@@ -26,6 +26,7 @@ const PatientsScreen = () => {
 
     const handleCreatePatientButton = item => {
         setSelectedMenuItem('');
+        getData();
     }
 
     const buttons = [
