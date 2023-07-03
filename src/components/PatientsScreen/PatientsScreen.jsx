@@ -89,10 +89,15 @@ const PatientsScreen = () => {
                     return <div></div>
                 default:
                     return (
-                        <>
-                            <ButtonsRow buttons={buttons} width={20} onClick={handleMenuItemClick} />
-                            <CustomTable data={patientData} columns={columns} />
-                        </>
+                        <div>
+                            <div>
+                                <ButtonsRow buttons={buttons} width={20} onClick={handleMenuItemClick} />
+                            </div>
+                            <div>
+                                <CustomTable data={patientData} columns={columns} />
+                            </div>
+
+                        </div>
                     );
             }
 
