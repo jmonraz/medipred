@@ -2,6 +2,9 @@ import React from "react";
 import "./CustomTable.css";
 
 const CustomTable = ({ data, columns }) => {
+    const defaultArray = [];
+    console.log('customtable:', data);
+    const arrayToMap = data || defaultArray;
     return (
         <div className="custom-table-container">
             <table className="custom-table">
@@ -13,13 +16,17 @@ const CustomTable = ({ data, columns }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((row, index) => (
-                        <tr key={index}>
-                            {row.map((cell, cellIndex) => (
-                                <td key={cellIndex}>{cell}</td>
-                            ))}
-                        </tr>
-                    ))}
+                    {arrayToMap.map((patient, index) => {
+                        console.log(patient, index);
+                        return (
+
+                            <tr key={index}>
+                                {Object.values(patient).map((value, valueIndex) => (
+                                    <td key={valueIndex}>{value}</td>
+                                ))}
+                            </tr>
+                        )
+                    })}
                 </tbody>
             </table>
         </div>
