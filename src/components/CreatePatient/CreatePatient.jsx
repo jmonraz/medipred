@@ -36,57 +36,64 @@ const CreatePatient = () => {
     }
     return (
         <>
+
             <form onSubmit={handleSubmit} className="form-container">
-
-                <h6 className="form-sub">Information</h6>
-
-                <div className="form-row">
-
-                    <div className="form-col">
-                        <label>First Name*</label>
-                        <InputField id="firstName" placeholder="" value={firstName} onChange={handleFirstNameChange} />
-                        <label>Middle Name*</label>
-                        <InputField id="middleName" placeholder="" value={middleName} onChange={handleFirstNameChange} />
-                        <label>Last Name*</label>
-                        <InputField id="lastName" placeholder="" value={lastName} onChange={handleFirstNameChange} />
-                        <label>Contact Email*</label>
-                        <InputField id="contactEmail" placeholder="" value={contactEmail} onChange={handleFirstNameChange} />
-                        <label>Contact Phone*</label>
-                        <InputField id="contactPhone" placeholder="" value={contactPhone} onChange={handleFirstNameChange} />
-                    </div>
-                    <div className="form-col">
-
-                        <label>DOB*</label>
-                        <InputField id="dob" placeholder="" value={dob} onChange={handleFirstNameChange} />
-                        <label>Height</label>
-                        <InputField id="height" placeholder="" value={height} onChange={handleFirstNameChange} />
-                        <label>Weight</label>
-                        <InputField id="weight" placeholder="" value={weigth} onChange={handleFirstNameChange} />
-                        <label>Bloog Group</label>
-                        <InputField id="bloodGroup" placeholder="" value={bloodGroup} onChange={handleFirstNameChange} />
-                    </div>
+                <div className="create-patient-banner">
+                    <p>Create Patient</p>
+                    <button type="submit">Save</button>
                 </div>
-                <hr></hr>
-                <br></br>
-                <h6 className="form-sub">Address</h6>
-                <div className="form-row">
-                    <div className="form-col">
-                        <label>Address 1</label>
-                        <InputField id="adress1" placeholder="" value={address1} onChange={handleFirstNameChange} />
-                        <label>Address 2</label>
-                        <InputField id="address2" placeholder="" value={address2} onChange={handleFirstNameChange} />
-                        <label>Address 3</label>
-                        <InputField id="address3" placeholder="" value={address3} onChange={handleFirstNameChange} />
-                        <label>City</label>
-                        <InputField id="city" placeholder="" value={city} onChange={handleFirstNameChange} />
+                <div className="form-sub-container">
+
+                    <h6 className="form-sub">Information</h6>
+
+                    <div className="form-row">
+
+                        <div className="form-col">
+                            <label>First Name*</label>
+                            <InputField id="firstName" placeholder="" value={firstName} onChange={handleFirstNameChange} />
+                            <label>Middle Name*</label>
+                            <InputField id="middleName" placeholder="" value={middleName} onChange={handleFirstNameChange} />
+                            <label>Last Name*</label>
+                            <InputField id="lastName" placeholder="" value={lastName} onChange={handleFirstNameChange} />
+                            <label>Contact Email*</label>
+                            <InputField id="contactEmail" placeholder="" value={contactEmail} onChange={handleFirstNameChange} />
+                            <label>Contact Phone*</label>
+                            <InputField id="contactPhone" placeholder="" value={contactPhone} onChange={handleFirstNameChange} />
+                        </div>
+                        <div className="form-col">
+
+                            <label>DOB*</label>
+                            <InputField id="dob" placeholder="" value={dob} onChange={handleFirstNameChange} />
+                            <label>Height</label>
+                            <InputField id="height" placeholder="" value={height} onChange={handleFirstNameChange} />
+                            <label>Weight</label>
+                            <InputField id="weight" placeholder="" value={weigth} onChange={handleFirstNameChange} />
+                            <label>Bloog Group</label>
+                            <InputField id="bloodGroup" placeholder="" value={bloodGroup} onChange={handleFirstNameChange} />
+                        </div>
                     </div>
-                    <div className="form-col">
-                        <label>State</label>
-                        <InputField id="state" placeholder="" value={state} onChange={handleFirstNameChange} />
-                        <label>Postal Code</label>
-                        <InputField id="postalCode" placeholder="" value={postalCode} onChange={handleFirstNameChange} />
-                        <label>Country</label>
-                        <InputField id="country" placeholder="" value={country} onChange={handleFirstNameChange} />
+                    <hr></hr>
+                    <br></br>
+                    <h6 className="form-sub">Address</h6>
+                    <div className="form-row">
+                        <div className="form-col">
+                            <label>Address 1</label>
+                            <InputField id="adress1" placeholder="" value={address1} onChange={handleFirstNameChange} />
+                            <label>Address 2</label>
+                            <InputField id="address2" placeholder="" value={address2} onChange={handleFirstNameChange} />
+                            <label>Address 3</label>
+                            <InputField id="address3" placeholder="" value={address3} onChange={handleFirstNameChange} />
+                            <label>City</label>
+                            <InputField id="city" placeholder="" value={city} onChange={handleFirstNameChange} />
+                        </div>
+                        <div className="form-col">
+                            <label>State</label>
+                            <InputField id="state" placeholder="" value={state} onChange={handleFirstNameChange} />
+                            <label>Postal Code</label>
+                            <InputField id="postalCode" placeholder="" value={postalCode} onChange={handleFirstNameChange} />
+                            <label>Country</label>
+                            <InputField id="country" placeholder="" value={country} onChange={handleFirstNameChange} />
+                        </div>
                     </div>
                 </div>
 

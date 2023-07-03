@@ -1,8 +1,14 @@
 .form-container {
-    padding: 25px;
+    padding: 0px 25px;
+    height: 100%;
+    width: 100%;
+}
+
+.form-sub-container {
+    padding: 0px 25px;
     overflow-x: auto;
     width: 100%;
-    height: 100%;
+    height: 95%;
     white-space: nowrap;
 }
 
@@ -27,4 +33,9 @@
 .form-sub {
     font-size: 14px;
     font-weight: bold;
+}
+
+.create-patient-banner {
+    display: flex;
+    justify-content: space-between;
 }
