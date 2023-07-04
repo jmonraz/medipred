@@ -1,0 +1,19 @@
+.row-button {
+    padding: 6px;
+    margin: 3px;
+    background-color: #EFEEEE;
+    border: 1pt solid grey;
+    box-shadow: 0 0 5px rgb(0, 0, 0, 0.2);
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+
+.row-button:hover {
+    background-color: #dad8d8;
+}
+
+.row-button:active {
+    background-color: #cac9c9;
+}

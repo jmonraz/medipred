@@ -1,9 +1,9 @@
 import React from "react";
 import "./BoxItem.css";
 
-const BoxItem = ({ children, icon }) => {
+const BoxItem = ({ children, icon, onClick }) => {
     return (
-        <div className="box-item">
+        <div className="box-item" onClick={() => onClick('diabetes')}>
             <p>{children}</p>
         </div>
     )

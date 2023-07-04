@@ -91,7 +91,7 @@ const PatientsScreen = () => {
                     return (
                         <div>
                             <div>
-                                <ButtonsRow buttons={buttons} width={20} onClick={handleMenuItemClick} />
+                                <ButtonsRow buttons={buttons} width={22} onClick={handleMenuItemClick} />
                             </div>
                             <div>
                                 <CustomTable data={patientData} columns={columns} />
