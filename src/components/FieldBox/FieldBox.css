@@ -1,0 +1,7 @@
+.field-box {
+    background-color: #e9e6e6;
+    border: 1px solid #c6c5c5;
+    border-radius: 5px;
+    padding: 4px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
