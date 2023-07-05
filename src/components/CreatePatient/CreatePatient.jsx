@@ -83,7 +83,7 @@ const CreatePatient = ({ onCreate, onClose }) => {
         const parsedWeight = weight === '' ? 0.0 : parseFloat(weight);
         if (firstName && lastName && contactEmail && contactPhone && dob) {
             event.preventDefault();
-            console.log('submit form');
+            console.log(dateOfBirth);
 
             try {
                 // make API request
@@ -114,6 +114,7 @@ const CreatePatient = ({ onCreate, onClose }) => {
                             [snakeCase('country')]: country,
                         }
                     }),
+
                 })
                     .then(response => response.json())
                     .then(data => {
@@ -160,7 +161,7 @@ const CreatePatient = ({ onCreate, onClose }) => {
                         <div className="form-col">
 
                             <label>DOB*</label>
-                            <InputField id="dob" placeholder="" value={dateOfBirth} onChange={handleDateOfBirthChange} />
+                            <InputField id="dob" placeholder="" value={dateOfBirth} onChange={handleDateOfBirthChange} type="date" />
                             <label>Height</label>
                             <InputField id="height" placeholder="" value={height} onChange={handleHeightChange} />
                             <label>Weight</label>
