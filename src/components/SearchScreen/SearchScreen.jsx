@@ -52,8 +52,8 @@ const SearchScreen = ({ getPatientData, onClose }) => {
         }));
     }
 
-    React.useEffect(() => {
-    }, [patientData]);
+    // React.useEffect(() => {
+    // }, [patientData]);
 
     const columns = ['First Name', 'Last Name', 'Height', 'Weight', 'Blood Group', 'Date Of Birth'];
 

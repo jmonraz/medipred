@@ -11,15 +11,11 @@ import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
 
 
 const DiabetesScreen = () => {
-    const [selectedMenuItem, setSelectedMenuItem] = React.useState('');
 
     const columns = [
         'First Name', 'Last Name', 'Gender', 'Age', 'Glucose', 'Blood Pressure', 'Insulin', 'BMI', 'Outcome',
     ]
 
-    const dummyData = [
-        { 'firstName': 'Jorge', 'lastName': 'Monraz', 'gender': 'male', 'age': '28', 'glucose': '100', 'bloodPressure': '60', 'insulin': '20', 'BMI': '34', 'diabetes': '0' }
-    ]
     const buttons = [
         { 'icon': addIcon, 'label': 'add' },
         { 'icon': editIcon, 'label': 'edit' },
@@ -28,7 +24,40 @@ const DiabetesScreen = () => {
         { 'icon': excelIcon, 'label': 'excel' },
         { 'icon': adobeIcon, 'label': 'adobe' },
     ];
-    const data = [];
+
+    const [selectedMenuItem, setSelectedMenuItem] = React.useState('');
+    const [patientData, setPatientData] = React.useState([]);
+
+    React.useEffect(() => {
+        getData();
+    }, [])
+
+    const getData = async () => {
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/v1/diabetes/");
+            const data = await response.json();
+            const formattedData = formatData(data.data);
+            setPatientData(formattedData);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const formatData = (data) => {
+        return data.map(data => ({
+            firstName: data.first_name,
+            lastName: data.last_name,
+            gender: data.gender,
+            age: data.age,
+            glucose: data.glucose,
+            bloodPressure: data.blood_pressure,
+            insulin: data.insulin,
+            bmi: data.bmi,
+            outcome: data.outcome,
+        }))
+    }
+
+
     const handleMenuItemClick = item => {
         setSelectedMenuItem(item);
     }
@@ -45,7 +74,7 @@ const DiabetesScreen = () => {
                 return (
                     <div>
                         <ButtonsRow buttons={buttons} width={22} onClick={handleMenuItemClick} />
-                        <CustomTable data={dummyData} columns={columns} />
+                        <CustomTable data={patientData} columns={columns} onRowDoubleClick={() => { }} />
                     </div>
                 );
         }
