@@ -13,7 +13,7 @@ import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
 const DiabetesScreen = () => {
 
     const columns = [
-        'First Name', 'Last Name', 'Gender', 'Age', 'Glucose', 'Blood Pressure', 'Insulin', 'BMI', 'Outcome',
+        'First Name', 'Last Name', 'Gender', 'Age', 'Glucose', 'Blood Pressure', 'Insulin', 'BMI', 'Outcome', 'Last Checked',
     ]
 
     const buttons = [
@@ -54,6 +54,7 @@ const DiabetesScreen = () => {
             insulin: data.insulin,
             bmi: data.bmi,
             outcome: data.outcome,
+            lastChecked: data.last_checked,
         }))
     }
 
