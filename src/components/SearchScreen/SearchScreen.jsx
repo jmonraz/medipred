@@ -4,7 +4,7 @@ import CustomTable from "../CustomTable";
 import "./SearchScreen.css";
 
 
-const SearchScreen = ({ getPatientData }) => {
+const SearchScreen = ({ getPatientData, onClose }) => {
     const [firstName, setFirstName] = React.useState('')
     const [patientData, setPatientData] = React.useState([]);
     const [isDataLoaded, setIsDataLoaded] = React.useState(false);
@@ -59,8 +59,9 @@ const SearchScreen = ({ getPatientData }) => {
 
     return (
         <div className="main-container">
-            <div className="flex-row">
+            <div className="flex-row-spread">
                 <h6>Search Patient</h6>
+                <p className="bold-letters big close" onClick={onClose}>X</p>
             </div>
             <div className="flex-row">
                 <label className="flex-item">First Name</label>

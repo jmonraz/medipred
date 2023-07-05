@@ -7,7 +7,7 @@ import FieldBox from "../FieldBox";
 import searchIcon from "../../assets/images/icons/search_icon_black.png";
 
 
-const PatientInfo = ({ onCreate }) => {
+const PatientInfo = ({ onCreate, onClose }) => {
     const [selectedMenuItem, setSelectedMenuItem] = React.useState('');
     const [glucose, setGlucose] = React.useState('');
     const [bloodPressure, setBloodPressure] = React.useState('');
@@ -25,6 +25,10 @@ const PatientInfo = ({ onCreate }) => {
 
     const handleMenuItemClick = item => {
         setSelectedMenuItem(item);
+    }
+
+    const handleCloseChildScreen = item => {
+        setSelectedMenuItem('');
     }
 
     const handleGlucoseChange = event => {
@@ -61,13 +65,18 @@ const PatientInfo = ({ onCreate }) => {
     const renderComponent = () => {
         switch (selectedMenuItem) {
             case 'search':
-                return <SearchScreen getPatientData={getPatientData} />
+                return <SearchScreen getPatientData={getPatientData} onClose={handleCloseChildScreen} />
             default:
                 return (
                     <form className="form-container">
                         <div className="patient-info-banner">
                             <p>Patient Information</p>
-                            <button type="submit">Save</button>
+
+                            <div className="flex-row space">
+                                <button type="submit">Save</button>
+                                <p className="close left-space bold-letters big" onClick={onClose}>X</p>
+                            </div>
+
                         </div>
                         <div className="form-sub-container">
                             <div className="form-row-1">

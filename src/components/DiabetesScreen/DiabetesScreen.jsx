@@ -33,10 +33,14 @@ const DiabetesScreen = () => {
         setSelectedMenuItem(item);
     }
 
+    const handleCloseChild = item => {
+        setSelectedMenuItem('');
+    }
+
     const renderComponent = () => {
         switch (selectedMenuItem) {
             case 'add':
-                return <PatientInfo onCreate={null} />
+                return <PatientInfo onCreate={null} onClose={handleCloseChild} />
             default:
                 return (
                     <div>

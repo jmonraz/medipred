@@ -16,6 +16,23 @@
     margin: 10px 0;
 }
 
+.flex-row-spread {
+    display: flex;
+    justify-content: space-between;
+}
+
+.big {
+    font-size: 20px;
+}
+
+.close {
+    cursor: pointer;
+}
+
+.close:hover {
+    color: rgb(53, 52, 52);
+}
+
 .flex-item {
     margin-right: 15px;
     font-weight: 600;

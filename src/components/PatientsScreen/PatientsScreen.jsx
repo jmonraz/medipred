@@ -21,6 +21,9 @@ const PatientsScreen = () => {
     }, [])
 
     const handleMenuItemClick = item => {
+        if (item === "add") {
+            setSelectedMenuItem('');
+        }
         setSelectedMenuItem(item);
     }
 
@@ -46,7 +49,6 @@ const PatientsScreen = () => {
             const response = await fetch("http://127.0.0.1:8000/api/v1/patients/");
             const data = await response.json();
             const formattedData = formatData(data.patients);
-            console.log(formattedData);
             setPatientData(formattedData);
             setIsDataLoaded(true);
         } catch (error) {

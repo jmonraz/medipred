@@ -45,8 +45,9 @@ const Dashboard = () => {
             setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
         }
     }
-    const handleMenuItemClick = async item => {
-        console.log("Clicked item:", item.target.innerText);
+
+    const handleMenuItemClick = item => {
+
         setSelectedMenuItem(item.target.innerText);
         if (isHamburgerMenuOpen) {
             setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
