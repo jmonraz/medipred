@@ -4,7 +4,7 @@ import CustomTable from "../CustomTable";
 import "./SearchScreen.css";
 
 
-const SearchScreen = () => {
+const SearchScreen = ({ getPatientData }) => {
     const [firstName, setFirstName] = React.useState('')
     const [patientData, setPatientData] = React.useState([]);
     const [isDataLoaded, setIsDataLoaded] = React.useState(false);
@@ -21,6 +21,13 @@ const SearchScreen = () => {
         const filteredData = patientData.filter(patient => patient.firstName.toLowerCase().includes(searchValue.toLowerCase()));
         setFilteredPatientData(filteredData);
     };
+
+    const handleRowDoubleClick = (rowData) => {
+        console.log('Selected Row Data:', rowData);
+        getPatientData(rowData);
+
+    };
+
 
     const getData = async () => {
         try {
@@ -62,7 +69,7 @@ const SearchScreen = () => {
             <div className="sub-container">
 
                 <div className="flex-row">
-                    <CustomTable data={filteredPatientData.length > 0 ? filteredPatientData : patientData} columns={columns} />
+                    <CustomTable data={filteredPatientData.length > 0 ? filteredPatientData : patientData} columns={columns} onRowDoubleClick={handleRowDoubleClick} />
                 </div>
             </div>
         </div>

@@ -14,6 +14,12 @@ const PatientInfo = ({ onCreate }) => {
     const [insulin, setInsulin] = React.useState('');
     const [bmi, setBmi] = React.useState('');
 
+    const [firstName, setFirstName] = React.useState('');
+    const [middleName, setMiddleName] = React.useState('');
+    const [lastName, setLastName] = React.useState('');
+    const [weight, setWeight] = React.useState('');
+    const [height, setHeight] = React.useState('');
+
     const button =
         { 'icon': searchIcon, 'label': 'search' };
 
@@ -37,10 +43,25 @@ const PatientInfo = ({ onCreate }) => {
         setBmi(event.target.value);
     }
 
+    const getPatientData = (rowData) => {
+        const firstName = rowData['firstName'];
+        const middleName = rowData['middleName'];
+        const lastName = rowData['lastName'];
+        const height = rowData['height'];
+        const weight = rowData['weight'];
+
+        setFirstName(firstName);
+        setMiddleName(middleName);
+        setLastName(lastName);
+        setHeight(height);
+        setWeight(weight);
+        setSelectedMenuItem('');
+    }
+
     const renderComponent = () => {
         switch (selectedMenuItem) {
             case 'search':
-                return <SearchScreen />
+                return <SearchScreen getPatientData={getPatientData} />
             default:
                 return (
                     <form className="form-container">
@@ -56,18 +77,18 @@ const PatientInfo = ({ onCreate }) => {
                             <div className="form-row">
                                 <div className="form-col">
                                     <label>First Name</label>
-                                    <FieldBox data="Jorge" />
+                                    <FieldBox data={firstName} />
                                     <label>Middle Name</label>
-                                    <FieldBox data="Octavio" />
+                                    <FieldBox data={middleName} />
                                     <label>Last Name</label>
-                                    <FieldBox data="Monraz" />
+                                    <FieldBox data={lastName} />
 
                                 </div>
                                 <div className="form-col">
-                                    <label>Contact Email</label>
-                                    <FieldBox data="monraz@mail.com" />
-                                    <label>Contact Phone</label>
-                                    <FieldBox data="619800800" />
+                                    <label>Height</label>
+                                    <FieldBox data={height} />
+                                    <label>Weight</label>
+                                    <FieldBox data={weight} />
                                 </div>
                             </div>
                             <hr></hr>

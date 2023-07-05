@@ -1,7 +1,7 @@
 import React from "react";
 import "./CustomTable.css";
 
-const CustomTable = ({ data, columns }) => {
+const CustomTable = ({ data, columns, onRowDoubleClick }) => {
     const defaultArray = [];
     console.log('customtable:', data);
     const arrayToMap = data || defaultArray;
@@ -17,9 +17,8 @@ const CustomTable = ({ data, columns }) => {
                 </thead>
                 <tbody>
                     {arrayToMap.map((patient, index) => {
-                        console.log(patient, index);
                         return (
-                            <tr key={index}>
+                            <tr key={index} onDoubleClick={() => onRowDoubleClick(patient)}>
                                 {Object.values(patient).map((value, valueIndex) => (
                                     <td key={valueIndex}>{value}</td>
                                 ))}
