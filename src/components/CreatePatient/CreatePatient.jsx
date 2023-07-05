@@ -11,7 +11,7 @@ const CreatePatient = ({ onCreate }) => {
     const [contactPhone, setContactPhone] = useState('');
     const [dateOfBirth, setDateOfBirth] = useState('');
     const [height, setHeight] = useState('');
-    const [weigth, setWeight] = useState('');
+    const [weight, setWeight] = useState('');
     const [bloodGroup, setBloodGroup] = useState('');
     const [address1, setAddress1] = useState('');
     const [address2, setAddress2] = useState('');
@@ -78,6 +78,9 @@ const CreatePatient = ({ onCreate }) => {
         console.log('first_name:', firstName);
         console.log('address_1:', address1);
 
+        // Convert height and weight to decimal numbers and handle empty or whitespace-only values
+        const parsedHeight = height === '' ? 0.0 : parseFloat(height);
+        const parsedWeight = weight === '' ? 0.0 : parseFloat(weight);
         if (firstName && lastName && contactEmail && contactPhone && dob) {
             event.preventDefault();
             console.log('submit form');
@@ -97,8 +100,8 @@ const CreatePatient = ({ onCreate }) => {
                             [snakeCase('contactEmail')]: contactEmail,
                             [snakeCase('contactPhone')]: contactPhone,
                             [snakeCase('dateOfBirth')]: dateOfBirth,
-                            [snakeCase('height')]: height,
-                            [snakeCase('weight')]: weigth,
+                            [snakeCase('height')]: parsedHeight,
+                            [snakeCase('weight')]: parsedWeight,
                             [snakeCase('bloodGroup')]: bloodGroup,
                         },
                         address: {
@@ -161,7 +164,7 @@ const CreatePatient = ({ onCreate }) => {
                             <label>Height</label>
                             <InputField id="height" placeholder="" value={height} onChange={handleHeightChange} />
                             <label>Weight</label>
-                            <InputField id="weight" placeholder="" value={weigth} onChange={handleWeightChange} />
+                            <InputField id="weight" placeholder="" value={weight} onChange={handleWeightChange} />
                             <label>Bloog Group</label>
                             <InputField id="bloodGroup" placeholder="" value={bloodGroup} onChange={handleBloodGroupChange} />
                         </div>

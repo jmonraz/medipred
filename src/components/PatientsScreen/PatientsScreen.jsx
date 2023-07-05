@@ -66,14 +66,12 @@ const PatientsScreen = () => {
     }
 
     useEffect(() => {
-        console.log("patients:", patientData);
     }, [patientData]);
 
     const renderComponent = () => {
         if (!isDataLoaded) {
             return <div>Loading...</div>
         } else {
-            console.log('patients:', patientData);
             switch (selectedMenuItem) {
                 case 'add':
                     return <CreatePatient onCreate={handleCreatePatientButton} />
@@ -89,15 +87,10 @@ const PatientsScreen = () => {
                     return <div></div>
                 default:
                     return (
-                        <div>
-                            <div>
-                                <ButtonsRow buttons={buttons} width={22} onClick={handleMenuItemClick} />
-                            </div>
-                            <div>
-                                <CustomTable data={patientData} columns={columns} />
-                            </div>
-
-                        </div>
+                        <>
+                            <ButtonsRow buttons={buttons} width={22} onClick={handleMenuItemClick} />
+                            <CustomTable data={patientData} columns={columns} />
+                        </>
                     );
             }
 

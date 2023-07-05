@@ -1,0 +1,26 @@
+.main-container {
+    height: 100%;
+    width: 100%;
+}
+
+.sub-container {
+    height: 85%;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.flex-row {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.flex-item {
+    margin-right: 15px;
+    font-weight: 600;
+}
+
+.flex-row input {
+    padding: 8px;
+}

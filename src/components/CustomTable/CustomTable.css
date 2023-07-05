@@ -28,10 +28,13 @@
     cursor: pointer;
 }
 
-.custom-table th {
+.custom-table thead th {
     background-color: #b7cce5;
     font-weight: 600;
     font-size: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .custom-table tbody tr {
