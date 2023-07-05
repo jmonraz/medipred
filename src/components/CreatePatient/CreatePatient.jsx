@@ -3,7 +3,7 @@ import { snakeCase } from 'lodash';
 import InputField from "../InputField";
 import "./CreatePatient.css";
 
-const CreatePatient = ({ onCreate }) => {
+const CreatePatient = ({ onCreate, onClose }) => {
     const [firstName, setFirstName] = useState('');
     const [middleName, setMiddleName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -137,14 +137,14 @@ const CreatePatient = ({ onCreate }) => {
             <form onSubmit={handleSubmit} className="form-container">
                 <div className="create-patient-banner">
                     <p>Create Patient</p>
-                    <button type="submit">Save</button>
+                    <div className="flex-row space">
+                        <button type="submit">Save</button>
+                        <p className="bold-letters big close left-space" onClick={onClose}>X</p>
+                    </div>
                 </div>
                 <div className="form-sub-container">
-
                     <h6 className="form-sub">Information</h6>
-
                     <div className="form-row">
-
                         <div className="form-col">
                             <label>First Name*</label>
                             <InputField id="firstName" placeholder="" value={firstName} onChange={handleFirstNameChange} />

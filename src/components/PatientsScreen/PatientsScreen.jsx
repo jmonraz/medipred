@@ -21,12 +21,12 @@ const PatientsScreen = () => {
     }, [])
 
     const handleMenuItemClick = item => {
-        if (item === "add") {
-            setSelectedMenuItem('');
-        }
         setSelectedMenuItem(item);
     }
 
+    const handleCloseChild = () => {
+        setSelectedMenuItem('');
+    }
     const handleCreatePatientButton = item => {
         setSelectedMenuItem('');
         getData();
@@ -76,7 +76,7 @@ const PatientsScreen = () => {
         } else {
             switch (selectedMenuItem) {
                 case 'add':
-                    return <CreatePatient onCreate={handleCreatePatientButton} />
+                    return <CreatePatient onCreate={handleCreatePatientButton} onClose={handleCloseChild} />
                 case 'edit':
                     return <div></div>
                 case 'block':
