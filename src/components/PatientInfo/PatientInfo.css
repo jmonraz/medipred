@@ -1,12 +1,13 @@
-.form-container {
+.form-container-2 {
     padding: 0px 25px;
     height: 100%;
     width: 100%;
 }
 
-.form-sub-container {
+.form-sub-container-2 {
     padding: 0px 25px;
     overflow-x: auto;
+    overflow-y: auto;
     width: 100%;
     height: 85%;
     white-space: nowrap;
@@ -24,7 +25,7 @@
     padding: 15px 25px;
 }
 
-.form-container input {
+.form-container-2 input {
     width: 100%;
     padding: 6px;
     margin: 2px 0px;
@@ -45,7 +46,6 @@
     display: flex;
     align-items: center;
 }
-
 
 .form-sub {
     margin-right: 20px;

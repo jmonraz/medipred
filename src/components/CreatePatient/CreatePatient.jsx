@@ -9,6 +9,7 @@ const CreatePatient = ({ onCreate, onClose }) => {
     const [lastName, setLastName] = useState('');
     const [contactEmail, setContactEmail] = useState('');
     const [contactPhone, setContactPhone] = useState('');
+    const [gender, setGender] = useState('male');
     const [dateOfBirth, setDateOfBirth] = useState('');
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
@@ -35,6 +36,9 @@ const CreatePatient = ({ onCreate, onClose }) => {
     }
     const handleContactPhoneChange = event => {
         setContactPhone(event.target.value);
+    }
+    const handleGenderChange = event => {
+        setGender(event.target.value);
     }
     const handleDateOfBirthChange = event => {
         setDateOfBirth(event.target.value);
@@ -75,16 +79,13 @@ const CreatePatient = ({ onCreate, onClose }) => {
             implement feature to call backend
              and create new patinet in DB
         */
-        console.log('first_name:', firstName);
-        console.log('address_1:', address1);
 
         // Convert height and weight to decimal numbers and handle empty or whitespace-only values
         const parsedHeight = height === '' ? 0.0 : parseFloat(height);
         const parsedWeight = weight === '' ? 0.0 : parseFloat(weight);
-        if (firstName && lastName && contactEmail && contactPhone && dob) {
+        if (firstName && lastName && contactEmail && contactPhone && dateOfBirth) {
             event.preventDefault();
-            console.log(dateOfBirth);
-
+            console.log(gender);
             try {
                 // make API request
                 const response = await fetch('http://127.0.0.1:8000/api/v1/patients/create/', {
@@ -103,6 +104,7 @@ const CreatePatient = ({ onCreate, onClose }) => {
                             [snakeCase('height')]: parsedHeight,
                             [snakeCase('weight')]: parsedWeight,
                             [snakeCase('bloodGroup')]: bloodGroup,
+                            [snakeCase('gender')]: gender,
                         },
                         address: {
                             [snakeCase('address1')]: address1,
@@ -118,7 +120,6 @@ const CreatePatient = ({ onCreate, onClose }) => {
                 })
                     .then(response => response.json())
                     .then(data => {
-                        console.log('API response:', data);
                         if (data.message = 'Patient created successfully') {
                             onCreate();
                         }
@@ -159,13 +160,17 @@ const CreatePatient = ({ onCreate, onClose }) => {
                             <InputField id="contactPhone" placeholder="" value={contactPhone} onChange={handleContactPhoneChange} />
                         </div>
                         <div className="form-col">
-
+                            <label>Gender</label>
+                            <select value={gender} onChange={handleGenderChange} className="input-field">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
                             <label>DOB*</label>
                             <InputField id="dob" placeholder="" value={dateOfBirth} onChange={handleDateOfBirthChange} type="date" />
-                            <label>Height</label>
-                            <InputField id="height" placeholder="" value={height} onChange={handleHeightChange} />
-                            <label>Weight</label>
-                            <InputField id="weight" placeholder="" value={weight} onChange={handleWeightChange} />
+                            <label>Height (cm)</label>
+                            <InputField id="height" placeholder="" value={height} onChange={handleHeightChange} type="number" />
+                            <label>Weight (lbs)</label>
+                            <InputField id="weight" placeholder="" value={weight} onChange={handleWeightChange} type="number" />
                             <label>Bloog Group</label>
                             <InputField id="bloodGroup" placeholder="" value={bloodGroup} onChange={handleBloodGroupChange} />
                         </div>

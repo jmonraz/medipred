@@ -19,6 +19,8 @@ const PatientInfo = ({ onCreate, onClose }) => {
     const [lastName, setLastName] = React.useState('');
     const [weight, setWeight] = React.useState('');
     const [height, setHeight] = React.useState('');
+    const [age, setAge] = React.useState('');
+    const [gender, setGender] = React.useState('');
 
     const button =
         { 'icon': searchIcon, 'label': 'search' };
@@ -53,12 +55,16 @@ const PatientInfo = ({ onCreate, onClose }) => {
         const lastName = rowData['lastName'];
         const height = rowData['height'];
         const weight = rowData['weight'];
+        const age = rowData['age'];
+        const gender = rowData['gender'];
 
         setFirstName(firstName);
         setMiddleName(middleName);
         setLastName(lastName);
         setHeight(height);
         setWeight(weight);
+        setAge(age);
+        setGender(gender);
         setSelectedMenuItem('');
     }
 
@@ -68,62 +74,66 @@ const PatientInfo = ({ onCreate, onClose }) => {
                 return <SearchScreen getPatientData={getPatientData} onClose={handleCloseChildScreen} />
             default:
                 return (
-                    <form className="form-container">
-                        <div className="patient-info-banner">
-                            <p>Patient Information</p>
+                    <>
+                        <form className="form-container-2">
+                            <div className="patient-info-banner">
+                                <p>Patient Information</p>
+                                <div className="flex-row space">
+                                    <button type="submit">Save</button>
+                                    <p className="close left-space bold-letters big" onClick={onClose}>X</p>
+                                </div>
+                            </div>
+                            <div className="form-sub-container-2">
+                                <div className="form-row-1">
+                                    <h6 className="form-sub">Information</h6>
+                                    <SingleButton button={button} onClick={handleMenuItemClick} width={22} />
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-col">
+                                        <label>First Name</label>
+                                        <FieldBox data={firstName} />
+                                        <label>Middle Name</label>
+                                        <FieldBox data={middleName} />
+                                        <label>Last Name</label>
+                                        <FieldBox data={lastName} />
 
-                            <div className="flex-row space">
-                                <button type="submit">Save</button>
-                                <p className="close left-space bold-letters big" onClick={onClose}>X</p>
-                            </div>
-
-                        </div>
-                        <div className="form-sub-container">
-                            <div className="form-row-1">
-                                <h6 className="form-sub">Information</h6>
-                                <SingleButton button={button} onClick={handleMenuItemClick} width={22} />
-                            </div>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>First Name</label>
-                                    <FieldBox data={firstName} />
-                                    <label>Middle Name</label>
-                                    <FieldBox data={middleName} />
-                                    <label>Last Name</label>
-                                    <FieldBox data={lastName} />
-
+                                    </div>
+                                    <div className="form-col">
+                                        <label>Gender</label>
+                                        <FieldBox data={gender} />
+                                        <label>Age</label>
+                                        <FieldBox data={age} />
+                                        <label>Height</label>
+                                        <FieldBox data={height} />
+                                        <label>Weight</label>
+                                        <FieldBox data={weight} />
+                                    </div>
                                 </div>
-                                <div className="form-col">
-                                    <label>Height</label>
-                                    <FieldBox data={height} />
-                                    <label>Weight</label>
-                                    <FieldBox data={weight} />
-                                </div>
-                            </div>
-                            <hr></hr>
-                            <br></br>
-                            <h6 className="form-sub">Analysis</h6>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Glucose*</label>
-                                    <InputField id="glucose" placeholder="" value={glucose} onChange={handleGlucoseChange} />
-                                    <label>Blood Pressure*</label>
-                                    <InputField id="bloodPressure" placeholder="" value={bloodPressure} onChange={handleBloodPressureChange} />
-                                    <label>Insulin*</label>
-                                    <InputField id="insulin" placeholder="" value={insulin} onChange={handleInsulinChange} />
-                                    <label>BMI*</label>
-                                    <InputField id="bmi" placeholder="" value={bmi} onChange={handleBmiChange} />
-                                </div>
-                                <div className="form-col center-letters">
-                                    <p className="bold-letters">Diabetes Risk</p>
-                                    <p className="red-letters bold-letters">FALSE</p>
-                                    <p>OR</p>
-                                    <p className="green-letters bold-letters">TRUE</p>
-                                    <p className="orange-letters">Needs Further Evaluation*</p>
+                                <hr></hr>
+                                <br></br>
+                                <h6 className="form-sub">Analysis</h6>
+                                <div className="form-row">
+                                    <div className="form-col">
+                                        <label>Glucose*</label>
+                                        <InputField id="glucose" placeholder="" value={glucose} onChange={handleGlucoseChange} />
+                                        <label>Blood Pressure*</label>
+                                        <InputField id="bloodPressure" placeholder="" value={bloodPressure} onChange={handleBloodPressureChange} />
+                                        <label>Insulin*</label>
+                                        <InputField id="insulin" placeholder="" value={insulin} onChange={handleInsulinChange} />
+                                        <label>BMI*</label>
+                                        <InputField id="bmi" placeholder="" value={bmi} onChange={handleBmiChange} />
+                                    </div>
+                                    <div className="form-col center-letters">
+                                        <p className="bold-letters">Diabetes Risk</p>
+                                        <p className="red-letters bold-letters">FALSE</p>
+                                        <p>OR</p>
+                                        <p className="green-letters bold-letters">TRUE</p>
+                                        <p className="orange-letters">Needs Further Evaluation*</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </>
                 )
         }
     }

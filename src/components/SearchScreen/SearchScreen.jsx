@@ -45,17 +45,19 @@ const SearchScreen = ({ getPatientData, onClose }) => {
         return patients.map(patient => ({
             firstName: patient.first_name,
             lastName: patient.last_name,
+            age: patient.age,
+            gender: patient.gender,
             height: patient.height,
             weight: patient.weight,
             bloodGroup: patient.blood_group,
-            dateOfBirth: patient.date_of_birth
+            dateOfBirth: patient.date_of_birth,
         }));
     }
 
     // React.useEffect(() => {
     // }, [patientData]);
 
-    const columns = ['First Name', 'Last Name', 'Height', 'Weight', 'Blood Group', 'Date Of Birth'];
+    const columns = ['First Name', 'Last Name', 'Age', 'Gender', 'Height (cm)', 'Weight (lb)', 'Blood Group', 'Date Of Birth'];
 
     return (
         <div className="main-container">
