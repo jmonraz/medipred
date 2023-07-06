@@ -1,8 +1,9 @@
 import React from "react";
 import BoxItem from "../BoxItem";
-import "./AnalyticsScreen.css";
+import OverlayBox from "../OverlayBox";
 import DiabetesScreen from "../DiabetesScreen/DiabetesScreen";
-import { UserContext } from "../../contexts/UserContext";
+import "./AnalyticsScreen.css";
+
 
 const AnalyticsScreen = () => {
     const [selectedMenuItem, setSelectedMenuItem] = React.useState('');
@@ -35,7 +36,10 @@ const AnalyticsScreen = () => {
 
     return (
         <>
-            {renderComponent()}
+            <OverlayBox>
+
+                {renderComponent()}
+            </OverlayBox>
         </>
     )
 }

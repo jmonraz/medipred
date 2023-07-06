@@ -1,0 +1,75 @@
+import React, { useState, useEffect, useContext } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext";
+import Menu from "../Menu";
+import Banner from "../Banner";
+import Dashboard from "../Dashboard/Dashboard";
+import PatientsScreen from "../PatientsScreen";
+import AnalyticsScreen from "../AnalyticsScreen";
+
+import "./HomeScreen.css";
+
+const HomeScreen = () => {
+
+    const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+    const [selectedMenuItem, setSelectedMenuItem] = useState(false);
+    const { updateUser, updateAuthenticated, user, authenticated } = useContext(UserContext);
+
+    const hamburgerMenuItems = ["Patients", "Appointments", "Diseases", "Analytics", "Roles", "Help"];
+    const userMenuItems = [`User: ${user.username}`, `Email: ${user.email}`, "Change Password", "About", "Logout"];
+    const navigate = useNavigate();
+
+    const handleToggleHamburgerMenu = () => {
+        setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
+        if (isUserMenuOpen) {
+            setIsUserMenuOpen(!isUserMenuOpen);
+        }
+    }
+    const handleToggleUserMenu = () => {
+        setIsUserMenuOpen(!isUserMenuOpen);
+        if (isHamburgerMenuOpen) {
+            setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
+        }
+    }
+
+    const handleMenuItemClick = item => {
+        console.log(item.target.innerText);
+        setSelectedMenuItem(item.target.innerText);
+        if (isHamburgerMenuOpen) {
+            setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
+        }
+        if (isUserMenuOpen) {
+            setIsUserMenuOpen(!setIsUserMenuOpen);
+        }
+
+        if (item.target.innerText === 'Logout') {
+            updateAuthenticated(false);
+            updateUser(false);
+        }
+        if (item.target.innerText === 'Patients') {
+            navigate("/home/patients");
+        }
+        if (item.target.innerText === 'Analytics') {
+            navigate("/home/analytics")
+        }
+    }
+
+    return (
+        <div className="parent-container dashboard">
+            <Banner onToggleHamburgerMenu={handleToggleHamburgerMenu} onToggleUserMenu={handleToggleUserMenu} />
+            {isHamburgerMenuOpen && <Menu menuItems={hamburgerMenuItems} position="start" onClick={handleMenuItemClick} />}
+            {isUserMenuOpen && <Menu menuItems={userMenuItems} position="end" onClick={handleMenuItemClick} />}
+            <Routes>
+                <Route path="/" element={<Navigate to="dashboard" replace />} />
+                <Route
+                    path="/dashboard"
+                    element={<Dashboard />} />
+                <Route path="/patients" element={<PatientsScreen />} />
+                <Route path="/analytics" element={<AnalyticsScreen />} />
+            </Routes>
+        </div>
+    )
+}
+
+export default HomeScreen;

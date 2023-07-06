@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import "./PatientsScreen.css";
 import ButtonsRow from "../ButtonsRow";
 import CustomTable from "../CustomTable";
 import CreatePatient from "../CreatePatient";
+import OverlayBox from "../OverlayBox";
 import addIcon from "../../assets/images/icons/add_icon_green.png";
 import editIcon from "../../assets/images/icons/edit_icon_orange.png";
 import blockIcon from "../../assets/images/icons/block_icon_red.png";
@@ -101,7 +103,9 @@ const PatientsScreen = () => {
 
     return (
         <>
-            {renderComponent()}
+            <OverlayBox>
+                {renderComponent()}
+            </OverlayBox>
         </>
     )
 }

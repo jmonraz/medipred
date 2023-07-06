@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import './Dashboard.css';
 import Banner from "../Banner";
 import OverlayBox from "../OverlayBox";
@@ -9,58 +10,7 @@ import PatientsScreen from "../PatientsScreen";
 import { UserContext } from "../../contexts/UserContext";
 
 const Dashboard = () => {
-
-    const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
-    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [selectedMenuItem, setSelectedMenuItem] = useState(false);
-    const { updateUser, updateAuthenticated, user } = useContext(UserContext);
-    const menuRef = useRef(null);
-    const hamburgerMenuItems = ["Patients", "Appointments", "Diseases", "Analytics", "Roles", "Help"];
-    const userMenuItems = [`User: ${user.username}`, `Email: ${user.email}`, "Change Password", "About", "Logout"];
-
-    useEffect(() => {
-        const handleOutsideClick = event => {
-            if (menuRef.current && !menuRef.current.contains(event.targe)) {
-                setIsHamburgerMenuOpen(false);
-            }
-        };
-
-        document.addEventListener("click", handleOutsideClick);
-
-        return () => {
-            document.removeEventListener("click", handleOutsideClick);
-        }
-
-    }, []);
-
-    const handleToggleHamburgerMenu = () => {
-        setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
-        if (isUserMenuOpen) {
-            setIsUserMenuOpen(!isUserMenuOpen);
-        }
-    }
-    const handleToggleUserMenu = () => {
-        setIsUserMenuOpen(!isUserMenuOpen);
-        if (isHamburgerMenuOpen) {
-            setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
-        }
-    }
-
-    const handleMenuItemClick = item => {
-
-        setSelectedMenuItem(item.target.innerText);
-        if (isHamburgerMenuOpen) {
-            setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
-        }
-        if (isUserMenuOpen) {
-            setIsUserMenuOpen(!setIsUserMenuOpen);
-        }
-
-        if (item.target.innerText === 'Logout') {
-            updateAuthenticated(false);
-            updateUser(false);
-        }
-    }
 
     const renderComponent = () => {
         switch (selectedMenuItem) {
@@ -85,14 +35,11 @@ const Dashboard = () => {
         }
     }
     return (
-        <div className="dashboard">
-            <Banner onToggleHamburgerMenu={handleToggleHamburgerMenu} onToggleUserMenu={handleToggleUserMenu} />
-            {isHamburgerMenuOpen && <Menu menuItems={hamburgerMenuItems} position="start" onClick={handleMenuItemClick} />}
-            {isUserMenuOpen && <Menu menuItems={userMenuItems} position="end" onClick={handleMenuItemClick} />}
+        <>
             <OverlayBox>
                 {renderComponent()}
             </OverlayBox>
-        </ div>
+        </>
     )
 }
 

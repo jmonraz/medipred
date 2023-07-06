@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import LoginForm from "./components/LoginForm";
-import Dashboard from "./components/Dashboard/Dashboard";
 import { UserContext } from "./contexts/UserContext";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import LoginForm from "./components/LoginForm";
+import Dashboard from "./components/Dashboard/Dashboard";
+import HomeScreen from "./components/HomeScreen/HomeScreen";
+
 import './App.css'
 
 const App = () => {
-
-  // const [authenticated, setAuthenticated] = useState(false);
   const { authenticated } = useContext(UserContext);
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -32,19 +32,14 @@ const App = () => {
             path="/"
             element={<LoginForm onFormSubmit={handleFormSubmit} />} />
           <Route
-            path="/home"
+            path="/home/*"
             element={authenticated ? (
-              <Dashboard />) : (
+              <HomeScreen />) : (
               <Navigate to="/" replace />
             )
             } />
         </Routes>
       </Router>
-      {/* {authenticated ? (
-        <Dashboard />
-      ) : (
-        <LoginForm onFormSubmit={handleFormSubmit} />
-      )} */}
     </div>
   );
 }
