@@ -1,4 +1,5 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import InputField from "../InputField";
 import FormButton from "../FormButton";
 import { UserContext } from "../../contexts/UserContext";
@@ -9,6 +10,7 @@ const LoginForm = ({ onFormSubmit }) => {
     const [password, setPassword] = useState('');
     const [loginMessage, setLoginMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
     // const formRef = useRef(null);
     const { updateUser, updateAuthenticated, authenticated } = useContext(UserContext);
 
@@ -47,7 +49,6 @@ const LoginForm = ({ onFormSubmit }) => {
                 })
                     .then(response => response.json())
                     .then(data => {
-                        console.log('API response:', data);
                         if (data.message === 'User logged in failed') {
                             setLoginMessage('Invalid username or password entered.');
                             updateUser(null);
@@ -57,7 +58,7 @@ const LoginForm = ({ onFormSubmit }) => {
                             // formRef.current.submit();
                             updateUser(data.user);
                             updateAuthenticated(true);
-                            console.log('form: ', authenticated)
+                            navigate("/home");
 
                         }
                         // reset form

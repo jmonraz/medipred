@@ -85,7 +85,6 @@ const CreatePatient = ({ onCreate, onClose }) => {
         const parsedWeight = weight === '' ? 0.0 : parseFloat(weight);
         if (firstName && lastName && contactEmail && contactPhone && dateOfBirth) {
             event.preventDefault();
-            console.log(gender);
             try {
                 // make API request
                 const response = await fetch('http://127.0.0.1:8000/api/v1/patients/create/', {
@@ -120,7 +119,7 @@ const CreatePatient = ({ onCreate, onClose }) => {
                 })
                     .then(response => response.json())
                     .then(data => {
-                        if (data.message = 'Patient created successfully') {
+                        if (data.message === 'Patient created successfully') {
                             onCreate();
                         }
                         else {

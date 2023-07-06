@@ -1,4 +1,5 @@
 import React from "react";
+import { snakeCase } from 'lodash';
 import "./PatientInfo.css";
 import SearchScreen from "../SearchScreen";
 import InputField from "../InputField";
@@ -21,6 +22,8 @@ const PatientInfo = ({ onCreate, onClose }) => {
     const [height, setHeight] = React.useState('');
     const [age, setAge] = React.useState('');
     const [gender, setGender] = React.useState('');
+
+    const [id, setId] = React.useState('');
 
     const button =
         { 'icon': searchIcon, 'label': 'search' };
@@ -57,6 +60,7 @@ const PatientInfo = ({ onCreate, onClose }) => {
         const weight = rowData['weight'];
         const age = rowData['age'];
         const gender = rowData['gender'];
+        const id = rowData['id'];
 
         setFirstName(firstName);
         setMiddleName(middleName);
@@ -65,7 +69,43 @@ const PatientInfo = ({ onCreate, onClose }) => {
         setWeight(weight);
         setAge(age);
         setGender(gender);
+        setId(id);
         setSelectedMenuItem('');
+    }
+
+    const analyze = async event => {
+        event.preventDefault();
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/v1/model/diabetes/predict/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    patient: {
+                        [snakeCase('id')]: id,
+                    },
+                    data: {
+                        [snakeCase('glucose')]: glucose,
+                        [snakeCase('bloodPressure')]: bloodPressure,
+                        [snakeCase('insulin')]: insulin,
+                        [snakeCase('bmi')]: bmi,
+                    }
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Analysis successful') {
+                        console.log('ok');
+                        onCreate('');
+                    } else {
+
+                    }
+                })
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const renderComponent = () => {
@@ -75,7 +115,7 @@ const PatientInfo = ({ onCreate, onClose }) => {
             default:
                 return (
                     <>
-                        <form className="form-container-2">
+                        <form className="form-container-2" onSubmit={analyze}>
                             <div className="patient-info-banner">
                                 <p>Patient Information</p>
                                 <div className="flex-row space">
@@ -125,10 +165,7 @@ const PatientInfo = ({ onCreate, onClose }) => {
                                     </div>
                                     <div className="form-col center-letters">
                                         <p className="bold-letters">Diabetes Risk</p>
-                                        <p className="red-letters bold-letters">FALSE</p>
-                                        <p>OR</p>
-                                        <p className="green-letters bold-letters">TRUE</p>
-                                        <p className="orange-letters">Needs Further Evaluation*</p>
+
                                     </div>
                                 </div>
                             </div>

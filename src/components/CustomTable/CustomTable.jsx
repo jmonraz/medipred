@@ -3,7 +3,6 @@ import "./CustomTable.css";
 
 const CustomTable = ({ data, columns, onRowDoubleClick }) => {
     const defaultArray = [];
-    console.log('customtable:', data);
     const arrayToMap = data || defaultArray;
     return (
         <div className="custom-table-container">
@@ -17,10 +16,11 @@ const CustomTable = ({ data, columns, onRowDoubleClick }) => {
                 </thead>
                 <tbody>
                     {arrayToMap.map((patient, index) => {
+                        const patientData = Object.entries(patient).filter(([key]) => key !== 'id');
                         return (
-                            <tr key={index} onDoubleClick={() => onRowDoubleClick(patient)}>
-                                {Object.values(patient).map((value, valueIndex) => (
-                                    <td key={valueIndex}>{value}</td>
+                            <tr key={patient.id} onDoubleClick={() => onRowDoubleClick(patient)}>
+                                {patientData.map(([key, value]) => (
+                                    <td key={key}>{value}</td>
                                 ))}
                             </tr>
                         )
