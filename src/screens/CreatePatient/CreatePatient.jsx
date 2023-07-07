@@ -78,59 +78,61 @@ const CreatePatient = ({ onCreate, onClose }) => {
         // Convert height and weight to decimal numbers and handle empty or whitespace-only values
         const parsedHeight = height === '' ? 0.0 : parseFloat(height);
         const parsedWeight = weight === '' ? 0.0 : parseFloat(weight);
-        if (firstName && lastName && contactEmail && contactPhone && dateOfBirth) {
-            event.preventDefault();
-            try {
-                // make API request
-                await fetch('http://127.0.0.1:8000/api/v1/patients/create/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        patient: {
-                            [snakeCase('firstName')]: firstName,
-                            [snakeCase('middleName')]: middleName,
-                            [snakeCase('lastName')]: lastName,
-                            [snakeCase('contactEmail')]: contactEmail,
-                            [snakeCase('contactPhone')]: contactPhone,
-                            [snakeCase('dateOfBirth')]: dateOfBirth,
-                            [snakeCase('height')]: parsedHeight,
-                            [snakeCase('weight')]: parsedWeight,
-                            [snakeCase('bloodGroup')]: bloodGroup,
-                            [snakeCase('gender')]: gender,
-                        },
-                        address: {
-                            [snakeCase('address1')]: address1,
-                            [snakeCase('address2')]: address2,
-                            [snakeCase('address3')]: address3,
-                            [snakeCase('city')]: city,
-                            [snakeCase('state')]: state,
-                            [snakeCase('postalCode')]: postalCode,
-                            [snakeCase('country')]: country,
-                        }
-                    }),
 
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.message === 'Patient created successfully') {
-                            onCreate();
-                        }
-                        if (data.error.contact_email[0] === 'A user with the same email already exists.') {
-                            console.log('A user with the same email already exists.');
-                            onCreate();
-                        }
-                    })
-            }
-            catch (error) {
-                console.log('API error:', error);
+        event.preventDefault();
+        try {
+            // make API request
+            const response = await fetch('http://127.0.0.1:8000/api/v1/patients/create/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    patient: {
+                        [snakeCase('firstName')]: firstName,
+                        [snakeCase('middleName')]: middleName,
+                        [snakeCase('lastName')]: lastName,
+                        [snakeCase('contactEmail')]: contactEmail,
+                        [snakeCase('contactPhone')]: contactPhone,
+                        [snakeCase('dateOfBirth')]: dateOfBirth,
+                        [snakeCase('height')]: parsedHeight,
+                        [snakeCase('weight')]: parsedWeight,
+                        [snakeCase('bloodGroup')]: bloodGroup,
+                        [snakeCase('gender')]: gender,
+                    },
+                    address: {
+                        [snakeCase('address1')]: address1,
+                        [snakeCase('address2')]: address2,
+                        [snakeCase('address3')]: address3,
+                        [snakeCase('city')]: city,
+                        [snakeCase('state')]: state,
+                        [snakeCase('postalCode')]: postalCode,
+                        [snakeCase('country')]: country,
+                    },
+                }),
+
+            });
+
+            const data = await response.json();
+
+            if (data.message === 'Patient created successfully') {
+                onCreate();
+            } else if (
+                data.error &&
+                data.error.contact_email &&
+                data.error.contact_email[0] === 'A user with the same email already exists.'
+            ) {
+                console.log('A user with the same email already exists.');
+                onCreate();
             }
         }
+        catch (error) {
+            console.log('API error:', error);
+        }
+
     }
     return (
         <>
-
             <form onSubmit={handleSubmit} className="form-container">
                 <div className="create-patient-banner">
                     <p>Create Patient</p>
@@ -194,7 +196,6 @@ const CreatePatient = ({ onCreate, onClose }) => {
                         </div>
                     </div>
                 </div>
-
             </form>
         </>
     )
