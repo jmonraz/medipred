@@ -25,7 +25,6 @@ const SearchScreen = ({ getPatientData, onClose }) => {
     const handleRowDoubleClick = (rowData) => {
         console.log('Selected Row Data:', rowData);
         getPatientData(rowData);
-
     };
 
 
@@ -54,9 +53,6 @@ const SearchScreen = ({ getPatientData, onClose }) => {
             dateOfBirth: patient.date_of_birth,
         }));
     }
-
-    // React.useEffect(() => {
-    // }, [patientData]);
 
     const columns = ['First Name', 'Last Name', 'Age', 'Gender', 'Height (cm)', 'Weight (lb)', 'Blood Group', 'Date Of Birth'];
 
