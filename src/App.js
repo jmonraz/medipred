@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "./contexts/UserContext";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import LoginForm from "./components/LoginForm";
-import Dashboard from "./components/Dashboard/Dashboard";
-import HomeScreen from "./components/HomeScreen/HomeScreen";
+import LoginForm from "./screens/LoginForm/LoginForm";
+import HomeScreen from "./screens/HomeScreen/HomeScreen";
 
 import './App.css'
 

@@ -1,20 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
-import Menu from "../Menu";
-import Banner from "../Banner";
+import Menu from "../../components/Menu";
+import Banner from "../../components/Banner";
 import Dashboard from "../Dashboard/Dashboard";
-import PatientsScreen from "../PatientsScreen";
-import AnalyticsScreen from "../AnalyticsScreen";
+import PatientsScreen from "../PatientsScreen/PatientsScreen";
+import AnalyticsScreen from "../AnalyticsScreen/AnalyticsScreen";
 
-import "./HomeScreen.css";
 
 const HomeScreen = () => {
 
     const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [selectedMenuItem, setSelectedMenuItem] = useState(false);
-    const { updateUser, updateAuthenticated, user, authenticated } = useContext(UserContext);
+    const { updateUser, updateAuthenticated, user } = useContext(UserContext);
 
     const hamburgerMenuItems = ["Patients", "Appointments", "Diseases", "Analytics", "Roles", "Help"];
     const userMenuItems = [`User: ${user.username}`, `Email: ${user.email}`, "Change Password", "About", "Logout"];

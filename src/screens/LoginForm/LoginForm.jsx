@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import InputField from "../InputField";
-import FormButton from "../FormButton";
+import InputField from "../../components/InputField";
+import FormButton from "../../components/FormButton";
 import { UserContext } from "../../contexts/UserContext";
 import './LoginForm.css';
 
@@ -11,8 +11,7 @@ const LoginForm = ({ onFormSubmit }) => {
     const [loginMessage, setLoginMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    // const formRef = useRef(null);
-    const { updateUser, updateAuthenticated, authenticated } = useContext(UserContext);
+    const { updateUser, updateAuthenticated } = useContext(UserContext);
 
     const handleUsernameChange = event => {
         setUsername(event.target.value);
@@ -37,7 +36,7 @@ const LoginForm = ({ onFormSubmit }) => {
             setIsLoading(true);
             try {
                 // make API request
-                const response = await fetch('http://127.0.0.1:8000/api/v1/login/', {
+                await fetch('http://127.0.0.1:8000/api/v1/login/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

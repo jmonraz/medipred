@@ -1,7 +1,7 @@
 import React from "react";
-import ButtonsRow from "../ButtonsRow";
-import CustomTable from "../CustomTable";
-import PatientInfo from "../PatientInfo";
+import ButtonsRow from "../../components/ButtonsRow";
+import CustomTable from "../../components/CustomTable";
+import PatientInfo from "../PatientInfo/PatientInfo";
 import addIcon from "../../assets/images/icons/add_icon_green.png";
 import editIcon from "../../assets/images/icons/edit_icon_orange.png";
 import blockIcon from "../../assets/images/icons/block_icon_red.png";
@@ -30,7 +30,7 @@ const DiabetesScreen = () => {
 
     React.useEffect(() => {
         getData();
-    }, [])
+    },)
 
     const getData = async () => {
         try {

@@ -1,6 +1,6 @@
 import React from "react";
-import BoxItem from "../BoxItem";
-import OverlayBox from "../OverlayBox";
+import BoxItem from "../../components/BoxItem";
+import OverlayBox from "../../components/OverlayBox";
 import DiabetesScreen from "../DiabetesScreen/DiabetesScreen";
 import "./AnalyticsScreen.css";
 

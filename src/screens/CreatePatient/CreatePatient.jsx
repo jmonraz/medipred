@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { snakeCase } from 'lodash';
-import InputField from "../InputField";
+import InputField from "../../components/InputField";
 import "./CreatePatient.css";
 
 const CreatePatient = ({ onCreate, onClose }) => {
@@ -75,11 +75,6 @@ const CreatePatient = ({ onCreate, onClose }) => {
     }
 
     const handleSubmit = async event => {
-        /* 
-            implement feature to call backend
-             and create new patinet in DB
-        */
-
         // Convert height and weight to decimal numbers and handle empty or whitespace-only values
         const parsedHeight = height === '' ? 0.0 : parseFloat(height);
         const parsedWeight = weight === '' ? 0.0 : parseFloat(weight);
@@ -87,7 +82,7 @@ const CreatePatient = ({ onCreate, onClose }) => {
             event.preventDefault();
             try {
                 // make API request
-                const response = await fetch('http://127.0.0.1:8000/api/v1/patients/create/', {
+                await fetch('http://127.0.0.1:8000/api/v1/patients/create/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

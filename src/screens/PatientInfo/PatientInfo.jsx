@@ -1,10 +1,10 @@
 import React from "react";
 import { snakeCase } from 'lodash';
 import "./PatientInfo.css";
-import SearchScreen from "../SearchScreen";
-import InputField from "../InputField";
-import SingleButton from "../SingleButton/SingleButton";
-import FieldBox from "../FieldBox";
+import SearchScreen from "../../components/SearchScreen";
+import InputField from "../../components/InputField";
+import SingleButton from "../../components/SingleButton";
+import FieldBox from "../../components/FieldBox";
 import searchIcon from "../../assets/images/icons/search_icon_black.png";
 
 
@@ -77,7 +77,7 @@ const PatientInfo = ({ onCreate, onClose }) => {
         event.preventDefault();
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/v1/model/diabetes/predict/', {
+            await fetch('http://127.0.0.1:8000/api/v1/model/diabetes/predict/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
