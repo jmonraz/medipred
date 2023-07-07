@@ -1,6 +1,6 @@
 import React from "react";
-import InputField from "../InputField";
-import CustomTable from "../CustomTable";
+import InputField from "../../components/InputField";
+import CustomTable from "../../components/CustomTable";
 import "./SearchScreen.css";
 
 

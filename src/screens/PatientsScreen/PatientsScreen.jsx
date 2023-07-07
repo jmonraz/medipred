@@ -12,24 +12,24 @@ import excelIcon from "../../assets/images/icons/excel_icon_green.png";
 import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
 
 const PatientsScreen = () => {
-
-    const [selectedMenuItem, setSelectedMenuItem] = React.useState(false);
     const [patientData, setPatientData] = useState([]);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
+    const [isAddOpen, setIsAddOpen] = useState(false);
 
     useEffect(() => {
         getData();
     },)
 
-    const handleMenuItemClick = item => {
-        setSelectedMenuItem(item);
+    const handleButtonClicked = label => {
+        if (label === 'add') {
+            setIsAddOpen(true);
+        }
     }
-
-    const handleCloseChild = () => {
-        setSelectedMenuItem('');
+    const handleCloseAdd = () => {
+        setIsAddOpen(false);
     }
     const handleCreatePatientButton = item => {
-        setSelectedMenuItem('');
+        setIsAddOpen(false);
         getData();
     }
 
@@ -72,29 +72,24 @@ const PatientsScreen = () => {
         if (!isDataLoaded) {
             return <div>Loading...</div>
         } else {
-            switch (selectedMenuItem) {
-                case 'add':
-                    return <CreatePatient onCreate={handleCreatePatientButton} onClose={handleCloseChild} />
-                case 'edit':
-                    return <div></div>
-                case 'block':
-                    return <div></div>
-                case 'search':
-                    return <div></div>
-                case 'excel':
-                    return <div></div>
-                case 'adobe':
-                    return <div></div>
-                default:
-                    return (
-                        <>
-                            <ButtonsRow buttons={buttons} width={22} onClick={handleMenuItemClick} />
-                            <CustomTable data={patientData} columns={columns} />
-                        </>
-                    );
-            }
+            return (
+                <div>
 
+                    {isAddOpen && (
+                        <div className="overlay">
+                            <div className="overlay-container">
+                                <CreatePatient onCreate={handleCreatePatientButton} onClose={handleCloseAdd} />
+                            </div>
+                        </div>
+                    )}
+
+                    <ButtonsRow buttons={buttons} width={22} onClick={handleButtonClicked} />
+                    <CustomTable data={patientData} columns={columns} />
+                </div>
+            );
         }
+
+
     }
 
     return (

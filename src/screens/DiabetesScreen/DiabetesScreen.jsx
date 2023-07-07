@@ -11,6 +11,9 @@ import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
 
 
 const DiabetesScreen = () => {
+    const [isDataLoaded, setIsDataLoaded] = React.useState(false);
+    const [patientData, setPatientData] = React.useState([]);
+    const [isAddOpen, setIsAddOpen] = React.useState(false);
 
     const columns = [
         'First Name', 'Last Name', 'Gender', 'Age', 'Glucose', 'Blood Pressure', 'Insulin', 'BMI', 'Outcome', 'Last Checked',
@@ -25,9 +28,6 @@ const DiabetesScreen = () => {
         { 'icon': adobeIcon, 'label': 'adobe' },
     ];
 
-    const [selectedMenuItem, setSelectedMenuItem] = React.useState('');
-    const [patientData, setPatientData] = React.useState([]);
-
     React.useEffect(() => {
         getData();
     },)
@@ -38,6 +38,7 @@ const DiabetesScreen = () => {
             const data = await response.json();
             const formattedData = formatData(data.data);
             setPatientData(formattedData);
+            setIsDataLoaded(true);
         } catch (error) {
             console.log(error);
         }
@@ -58,28 +59,38 @@ const DiabetesScreen = () => {
         }))
     }
 
-
-    const handleMenuItemClick = item => {
-        setSelectedMenuItem(item);
+    const handleButtonClicked = label => {
+        if (label === 'add') {
+            setIsAddOpen(true);
+        }
     }
 
-    const handleCloseChild = item => {
-        setSelectedMenuItem('');
+    const handleCloseAdd = () => {
+        setIsAddOpen(false);
+    }
+
+    const handleAnalyze = () => {
+        setIsAddOpen(false);
         getData();
     }
 
     const renderComponent = () => {
-        switch (selectedMenuItem) {
-            case 'add':
-                return <PatientInfo onCreate={handleCloseChild} onClose={handleCloseChild} />
-            default:
-                return (
-                    <div>
-                        <ButtonsRow buttons={buttons} width={22} onClick={handleMenuItemClick} />
-                        <CustomTable data={patientData} columns={columns} onRowDoubleClick={() => { }} />
-                    </div>
-                );
+        if (!isDataLoaded) {
+            return <div>Loading...</div>
         }
+        return (
+            <div>
+                {isAddOpen && (
+                    <div className="overlay">
+                        <div className="overlay-container">
+                            <PatientInfo onCreate={handleAnalyze} onClose={handleCloseAdd} />
+                        </div>
+                    </div>
+                )}
+                <ButtonsRow buttons={buttons} width={22} onClick={handleButtonClicked} />
+                <CustomTable data={patientData} columns={columns} onRowDoubleClick={() => { }} />
+            </div>
+        );
     }
     return (
         <>
