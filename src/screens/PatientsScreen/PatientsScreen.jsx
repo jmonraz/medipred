@@ -59,6 +59,7 @@ const PatientsScreen = () => {
 
     const formatData = (patients) => {
         return patients.map(patient => ({
+            id: patient.id,
             firstName: patient.first_name,
             lastName: patient.last_name,
             height: patient.height,

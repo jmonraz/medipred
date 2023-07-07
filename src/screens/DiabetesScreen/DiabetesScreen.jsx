@@ -46,6 +46,7 @@ const DiabetesScreen = () => {
 
     const formatData = (data) => {
         return data.map(data => ({
+            id: data.id,
             firstName: data.first_name,
             lastName: data.last_name,
             gender: data.gender,
