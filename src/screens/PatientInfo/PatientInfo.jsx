@@ -91,11 +91,11 @@ const PatientInfo = ({ onCreate, onClose }) => {
                 }),
             });
             const data = await response.json();
+            console.log(data);
             if (data.message === 'Analysis successful') {
                 console.log('ok');
                 onCreate('');
             } else {
-
             }
 
         } catch (error) {
