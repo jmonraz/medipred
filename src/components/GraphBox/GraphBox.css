@@ -10,9 +10,10 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     overflow-y: auto;
     overflow-x: auto;
-    padding: 5px 5px;
+    padding: 20px 0px;
 }
 
 .graph-item {
     text-align: center;
+    height: 100px;
 }

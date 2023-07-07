@@ -21,8 +21,8 @@ const CustomChart = () => {
     };
 
     return (
-        <div>
-            <h2>Diabetes Risk Analysis</h2>
+        <div style={{ width: '420px' }}>
+            <h4>Diabetes Risk Analysis</h4>
             <Bar data={data} />
         </div>
     );

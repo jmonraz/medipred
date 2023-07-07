@@ -3,6 +3,7 @@ import './Dashboard.css';
 import OverlayBox from "../../components/OverlayBox";
 import GraphBox from "../../components/GraphBox";
 import CustomChart from '../../components/CustomChart/CustomChart';
+import CustomPieChart from '../../components/CustomPieChart/CustomPieChart';
 
 const Dashboard = () => {
     return (
@@ -10,7 +11,7 @@ const Dashboard = () => {
             <OverlayBox>
                 <div className="flex-box">
                     <GraphBox><CustomChart /></GraphBox>
-                    <GraphBox>GRAPH 2</GraphBox>
+                    <GraphBox><CustomPieChart /></GraphBox>
                 </div>
                 <div className="flex-box">
                     {/*code here for table*/}
