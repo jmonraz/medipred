@@ -2,13 +2,14 @@
 import './Dashboard.css';
 import OverlayBox from "../../components/OverlayBox";
 import GraphBox from "../../components/GraphBox";
+import CustomChart from '../../components/CustomChart/CustomChart';
 
 const Dashboard = () => {
     return (
         <>
             <OverlayBox>
                 <div className="flex-box">
-                    <GraphBox>GRAPH 1</GraphBox>
+                    <GraphBox><CustomChart /></GraphBox>
                     <GraphBox>GRAPH 2</GraphBox>
                 </div>
                 <div className="flex-box">

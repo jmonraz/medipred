@@ -3,7 +3,10 @@ import "./GraphBox.css";
 const GraphBox = ({ children }) => {
     return (
         <div className="graph-box">
-            <h2>{children}</h2>
+            <div className="graph-item">
+                {children}
+            </div>
+
         </div>
     )
 }
