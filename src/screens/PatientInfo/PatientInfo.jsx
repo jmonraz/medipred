@@ -106,26 +106,25 @@ const PatientInfo = ({ onCreate, onClose }) => {
     const renderComponent = () => {
 
         return (
-            <div>
+            <>
                 {isSearchOpen && (
                     <div className="overlay">
                         <div className="overlay-container">
-
                             <SearchScreen getPatientData={getPatientData} onClose={onCloseChildComponent} />
                         </div>
 
                     </div>
                 )}
-                <form className="form-container-2" onSubmit={analyze}>
+                <form onSubmit={analyze} className="form-container">
                     <div className="patient-info-banner">
                         <p>Patient Information</p>
-                        <div className="flex-row space">
+                        <div className="flex-row">
                             <button type="submit">Save</button>
                             <p className="close left-space bold-letters big" onClick={onClose}>X</p>
                         </div>
                     </div>
-                    <div className="form-sub-container-2">
-                        <div className="form-row-1">
+                    <div className="form-sub-container alt-container">
+                        <div className="flex-row-start">
                             <h6 className="form-sub">Information</h6>
                             <SingleButton button={button} onClick={handleSearchClick} width={22} />
                         </div>
@@ -164,14 +163,12 @@ const PatientInfo = ({ onCreate, onClose }) => {
                                 <label>BMI*</label>
                                 <InputField id="bmi" placeholder="" value={bmi} onChange={handleBmiChange} />
                             </div>
-                            <div className="form-col center-letters">
-                                <p className="bold-letters">Diabetes Risk</p>
-
+                            <div className="form-col">
                             </div>
                         </div>
                     </div>
                 </form>
-            </div>
+            </>
         )
 
     }

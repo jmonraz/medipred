@@ -1,55 +1,16 @@
-.form-container-2 {
-    padding: 0px 25px;
-    height: 100%;
-    width: 100%;
-}
-
-.form-sub-container-2 {
-    padding: 0px 25px;
-    overflow-x: auto;
-    overflow-y: auto;
-    width: 100%;
-    height: 85%;
-    white-space: nowrap;
-}
-
-.form-row {
-    display: flex;
-    justify-content: space-around;
-}
-
-.form-col {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 15px 25px;
-}
-
-.form-container-2 input {
-    width: 100%;
-    padding: 6px;
-    margin: 2px 0px;
-}
-
-.form-sub {
-    font-size: 14px;
-    font-weight: bold;
-}
-
 .patient-info-banner {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
 }
 
-.form-row-1 {
+.flex-row-start {
     display: flex;
-    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: start;
 }
 
-.form-sub {
-    margin-right: 20px;
-}
 
 .center-letters {
     text-align: center;
