@@ -50,8 +50,20 @@ const HomeScreen = () => {
         if (item.target.innerText === 'Patients') {
             navigate("/home/patients");
         }
+        if (item.target.innerText === 'Appointments') {
+            navigate("/home/appointments")
+        }
+        if (item.target.innerText === 'Diseases') {
+            navigate("/home/diseases")
+        }
         if (item.target.innerText === 'Analytics') {
             navigate("/home/analytics")
+        }
+        if (item.target.innerText === 'Roles') {
+            navigate("/home/roles")
+        }
+        if (item.target.innerText === 'Help') {
+            navigate("/home/help")
         }
     }
 
@@ -66,7 +78,11 @@ const HomeScreen = () => {
                     path="/dashboard"
                     element={<Dashboard />} />
                 <Route path="/patients" element={<PatientsScreen />} />
+                <Route path="/appointments" element={<></>} />
+                <Route path="/diseases" element={<></>} />
                 <Route path="/analytics" element={<AnalyticsScreen />} />
+                <Route path="/roles" element={<></>} />
+                <Route path="/help" element={<></>} />
             </Routes>
         </div>
     )
