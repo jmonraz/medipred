@@ -15,7 +15,7 @@ const HomeScreen = () => {
     const [selectedMenuItem, setSelectedMenuItem] = useState(false);
     const { updateUser, updateAuthenticated, user } = useContext(UserContext);
 
-    const hamburgerMenuItems = ["Patients", "Appointments", "Diseases", "Analytics", "Roles", "Help"];
+    const hamburgerMenuItems = ["Home", "Patients", "Appointments", "Diseases", "Analytics", "Roles", "Help"];
     const userMenuItems = [`User: ${user.username}`, `Email: ${user.email}`, "Change Password", "About", "Logout"];
     const navigate = useNavigate();
 
@@ -45,6 +45,9 @@ const HomeScreen = () => {
         if (item.target.innerText === 'Logout') {
             updateAuthenticated(false);
             updateUser(false);
+        }
+        if (item.target.innerText === 'Home') {
+            navigate("/home/dashboard");
         }
         if (item.target.innerText === 'Patients') {
             navigate("/home/patients");

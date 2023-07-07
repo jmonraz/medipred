@@ -117,8 +117,9 @@ const CreatePatient = ({ onCreate, onClose }) => {
                         if (data.message === 'Patient created successfully') {
                             onCreate();
                         }
-                        else {
-                            console.log(data.message);
+                        if (data.error.contact_email[0] === 'A user with the same email already exists.') {
+                            console.log('A user with the same email already exists.');
+                            onCreate();
                         }
                     })
             }
@@ -143,15 +144,15 @@ const CreatePatient = ({ onCreate, onClose }) => {
                     <div className="form-row">
                         <div className="form-col">
                             <label>First Name*</label>
-                            <InputField id="firstName" placeholder="" value={firstName} onChange={handleFirstNameChange} />
+                            <InputField id="firstName" placeholder="" value={firstName} onChange={handleFirstNameChange} required />
                             <label>Middle Name</label>
                             <InputField id="middleName" placeholder="" value={middleName} onChange={handleMiddleNameChange} />
                             <label>Last Name*</label>
-                            <InputField id="lastName" placeholder="" value={lastName} onChange={handleLastNameChange} />
+                            <InputField id="lastName" placeholder="" value={lastName} onChange={handleLastNameChange} required />
                             <label>Contact Email*</label>
-                            <InputField id="contactEmail" placeholder="" value={contactEmail} onChange={handleContactEmailChange} />
+                            <InputField id="contactEmail" placeholder="" value={contactEmail} onChange={handleContactEmailChange} required />
                             <label>Contact Phone*</label>
-                            <InputField id="contactPhone" placeholder="" value={contactPhone} onChange={handleContactPhoneChange} />
+                            <InputField id="contactPhone" placeholder="" value={contactPhone} onChange={handleContactPhoneChange} required />
                         </div>
                         <div className="form-col">
                             <label>Gender</label>
@@ -160,7 +161,7 @@ const CreatePatient = ({ onCreate, onClose }) => {
                                 <option value="female">Female</option>
                             </select>
                             <label>DOB*</label>
-                            <InputField id="dob" placeholder="" value={dateOfBirth} onChange={handleDateOfBirthChange} type="date" />
+                            <InputField id="dob" placeholder="" value={dateOfBirth} onChange={handleDateOfBirthChange} type="date" required />
                             <label>Height (cm)</label>
                             <InputField id="height" placeholder="" value={height} onChange={handleHeightChange} type="number" />
                             <label>Weight (lbs)</label>
