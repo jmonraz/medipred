@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { snakeCase } from 'lodash';
 import "./PatientInfo.css";
 import SearchScreen from "../SearchScreen/SearchScreen";
@@ -9,6 +9,9 @@ import searchIcon from "../../assets/images/icons/search_icon_black.png";
 
 const PatientInfo = ({ onCreate, onClose }) => {
     const [isSearchOpen, setIsSearchOpen] = React.useState(false);
+    const [showPopup, setShowPopup] = React.useState(false);
+    const [requiredPopup, setRequiredPopup] = React.useState(false);
+    const [patientPopup, setPatientPopup] = React.useState(false);
 
     const [glucose, setGlucose] = React.useState('');
     const [bloodPressure, setBloodPressure] = React.useState('');
@@ -43,6 +46,9 @@ const PatientInfo = ({ onCreate, onClose }) => {
         setBmi(event.target.value);
     }
     const handleSearchClick = () => {
+        setShowPopup(false);
+        setPatientPopup(false);
+        setRequiredPopup(false);
         setIsSearchOpen(true);
     };
     const onCloseChildComponent = () => {
@@ -72,36 +78,67 @@ const PatientInfo = ({ onCreate, onClose }) => {
 
     const analyze = async event => {
         event.preventDefault();
-        try {
-            const response = await fetch('http://127.0.0.1:8000/api/v1/model/diabetes/predict/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    patient: {
-                        [snakeCase('id')]: id,
-                    },
-                    data: {
-                        [snakeCase('glucose')]: glucose,
-                        [snakeCase('bloodPressure')]: bloodPressure,
-                        [snakeCase('insulin')]: insulin,
-                        [snakeCase('bmi')]: bmi,
+        if (id !== '') {
+            if (glucose && bloodPressure && insulin && bmi) {
+                try {
+                    const response = await fetch('http://127.0.0.1:8000/api/v1/model/diabetes/predict/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            patient: {
+                                [snakeCase('id')]: id,
+                            },
+                            data: {
+                                [snakeCase('glucose')]: glucose,
+                                [snakeCase('bloodPressure')]: bloodPressure,
+                                [snakeCase('insulin')]: insulin,
+                                [snakeCase('bmi')]: bmi,
+                            }
+                        }),
+                    });
+                    const data = await response.json();
+                    if (data.message === 'Analysis successful') {
+                        onCreate('');
+                    } else if (data.message === 'Diabetes analysis already exists for this patient') {
+                        setShowPopup(true);
                     }
-                }),
-            });
-            const data = await response.json();
-            console.log(data);
-            if (data.message === 'Analysis successful') {
-                console.log('ok');
-                onCreate('');
-            } else {
-            }
 
-        } catch (error) {
-            console.log(error);
+                } catch (error) {
+                    console.log(error);
+                }
+            } else {
+                setRequiredPopup(true);
+            }
+        } else {
+            setPatientPopup(true);
         }
     }
+
+    useEffect(() => {
+        if (showPopup) {
+            setTimeout(() => {
+                setShowPopup(false);
+            }, 2000);
+        }
+    }, [showPopup]);
+
+    useEffect(() => {
+        if (requiredPopup) {
+            setTimeout(() => {
+                setRequiredPopup(false);
+            }, 2000);
+        }
+    }, [requiredPopup]);
+
+    useEffect(() => {
+        if (patientPopup) {
+            setTimeout(() => {
+                setPatientPopup(false);
+            }, 2000);
+        }
+    }, [patientPopup]);
 
     const renderComponent = () => {
 
@@ -168,6 +205,21 @@ const PatientInfo = ({ onCreate, onClose }) => {
                         </div>
                     </div>
                 </form>
+                {showPopup && (
+                    <div className="popup-message">
+                        <p>Analysis already exists.</p>
+                    </div>
+                )}
+                {requiredPopup && (
+                    <div className="popup-message">
+                        <p>Fill all required fields.</p>
+                    </div>
+                )}
+                {patientPopup && (
+                    <div className="popup-message">
+                        <p>No patient selected.</p>
+                    </div>
+                )}
             </>
         )
 
