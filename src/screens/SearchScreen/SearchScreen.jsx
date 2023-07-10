@@ -69,7 +69,7 @@ const SearchScreen = ({ getPatientData, onClose }) => {
             <div className="sub-container">
 
                 <div className="flex-row">
-                    <CustomTable data={filteredPatientData.length > 0 ? filteredPatientData : patientData} columns={columns} onRowDoubleClick={handleRowDoubleClick} />
+                    <CustomTable data={filteredPatientData.length > 0 ? filteredPatientData : patientData} columns={columns} onRowDoubleClick={handleRowDoubleClick} onRowClick={() => { }} />
                 </div>
             </div>
         </div>

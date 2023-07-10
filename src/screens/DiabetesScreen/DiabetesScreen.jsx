@@ -14,6 +14,7 @@ import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
 const DiabetesScreen = () => {
 
     const patientRef = useRef("");
+    const diabetesRef = useRef("");
 
     const [isDataLoaded, setIsDataLoaded] = React.useState(false);
     const [patientData, setPatientData] = React.useState([]);
@@ -70,6 +71,8 @@ const DiabetesScreen = () => {
             setIsAddOpen(true);
         }
         if (label == 'edit' && patientRef.current !== "") {
+            diabetesRef.current = patientData.filter((patient) => patient.id === patientRef.current.id);
+            console.log(diabetesRef);
             setIsEditOpen(true);
         }
     }
@@ -107,7 +110,7 @@ const DiabetesScreen = () => {
                 {isEditOpen && (
                     <div className="overlay">
                         <div className="overlay-container">
-                            <EditPatientInfo data={patientRef.current} onClose={handleCloseEdit} />
+                            <EditPatientInfo diabetesData={diabetesRef.current[0]} data={patientRef.current} onClose={handleCloseEdit} />
                         </div>
                     </div>
                 )}

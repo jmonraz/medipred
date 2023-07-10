@@ -4,21 +4,21 @@ import FieldBox from "../../components/FieldBox";
 import SingleButton from "../../components/SingleButton";
 import { snakeCase } from "lodash";
 
-const EditPatientInfo = ({ onClose, data }) => {
+const EditPatientInfo = ({ onClose, data, diabetesData }) => {
 
-    const [firstName, setFirstName] = React.useState('');
-    const [middleName, setMiddleName] = React.useState('');
-    const [lastName, setLastName] = React.useState('');
-    const [weight, setWeight] = React.useState('');
-    const [height, setHeight] = React.useState('');
-    const [age, setAge] = React.useState('');
-    const [gender, setGender] = React.useState('');
-    const [id, setId] = React.useState('');
+    const [firstName, setFirstName] = React.useState(data.firstName);
+    const [middleName, setMiddleName] = React.useState(data.middleName);
+    const [lastName, setLastName] = React.useState(data.lastName);
+    const [weight, setWeight] = React.useState(data.weight);
+    const [height, setHeight] = React.useState(data.height);
+    const [age, setAge] = React.useState(data.age);
+    const [gender, setGender] = React.useState(data.gender);
+    const [id, setId] = React.useState(data.id);
 
-    const [glucose, setGlucose] = React.useState('');
-    const [bloodPressure, setBloodPressure] = React.useState('');
-    const [insulin, setInsulin] = React.useState('');
-    const [bmi, setBmi] = React.useState('');
+    const [glucose, setGlucose] = React.useState(diabetesData.glucose);
+    const [bloodPressure, setBloodPressure] = React.useState(diabetesData.bloodPressure);
+    const [insulin, setInsulin] = React.useState(diabetesData.insulin);
+    const [bmi, setBmi] = React.useState(diabetesData.bmi);
 
     const handleGlucoseChange = event => {
         setGlucose(event.target.value);
@@ -117,13 +117,13 @@ const EditPatientInfo = ({ onClose, data }) => {
                     <div className="form-row">
                         <div className="form-col">
                             <label>Glucose*</label>
-                            <InputField id="glucose" placeholder="" value={glucose} onChange={handleGlucoseChange} />
+                            <InputField id="glucose" placeholder={glucose} value={glucose} onChange={handleGlucoseChange} />
                             <label>Blood Pressure*</label>
-                            <InputField id="bloodPressure" placeholder="" value={bloodPressure} onChange={handleBloodPressureChange} />
+                            <InputField id="bloodPressure" placeholder={bloodPressure} value={bloodPressure} onChange={handleBloodPressureChange} />
                             <label>Insulin*</label>
-                            <InputField id="insulin" placeholder="" value={insulin} onChange={handleInsulinChange} />
+                            <InputField id="insulin" placeholder={insulin} value={insulin} onChange={handleInsulinChange} />
                             <label>BMI*</label>
-                            <InputField id="bmi" placeholder="" value={bmi} onChange={handleBmiChange} />
+                            <InputField id="bmi" placeholder={bmi} value={bmi} onChange={handleBmiChange} />
                         </div>
                         <div className="form-col">
                         </div>
