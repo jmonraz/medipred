@@ -87,7 +87,7 @@ const PatientsScreen = () => {
                     )}
 
                     <ButtonsRow buttons={buttons} width={22} onClick={handleButtonClicked} />
-                    <CustomTable data={patientData} columns={columns} />
+                    <CustomTable data={patientData} columns={columns} onRowDoubleClick={() => { }} />
                 </div>
             );
         }

@@ -1,11 +1,12 @@
 import React from "react";
 import "./CustomTable.css";
 
-const CustomTable = ({ data, columns, onRowDoubleClick }) => {
+const CustomTable = ({ data, columns, onRowDoubleClick, onRowClick }) => {
     const [selectedRow, setSelectedRow] = React.useState(null);
 
     const handleRowClick = (patient) => {
         setSelectedRow(patient.id);
+        onRowClick(patient);
     }
 
     const defaultArray = [];

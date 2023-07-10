@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import ButtonsRow from "../../components/ButtonsRow";
 import CustomTable from "../../components/CustomTable";
 import PatientInfo from "../PatientInfo/PatientInfo";
+import EditPatientInfo from "../EditPatientInfo/EditPatientInfo";
 import addIcon from "../../assets/images/icons/add_icon_green.png";
 import editIcon from "../../assets/images/icons/edit_icon_orange.png";
 import blockIcon from "../../assets/images/icons/block_icon_red.png";
@@ -11,9 +12,13 @@ import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
 
 
 const DiabetesScreen = () => {
+
+    const patientRef = useRef("");
+
     const [isDataLoaded, setIsDataLoaded] = React.useState(false);
     const [patientData, setPatientData] = React.useState([]);
     const [isAddOpen, setIsAddOpen] = React.useState(false);
+    const [isEditOpen, setIsEditOpen] = React.useState(false);
 
     const columns = [
         'First Name', 'Last Name', 'Gender', 'Age', 'Glucose', 'Blood Pressure', 'Insulin', 'BMI', 'Outcome', 'Last Checked',
@@ -64,6 +69,9 @@ const DiabetesScreen = () => {
         if (label === 'add') {
             setIsAddOpen(true);
         }
+        if (label == 'edit' && patientRef.current !== "") {
+            setIsEditOpen(true);
+        }
     }
 
     const handleCloseAdd = () => {
@@ -73,6 +81,14 @@ const DiabetesScreen = () => {
     const handleAnalyze = () => {
         setIsAddOpen(false);
         getData();
+    }
+
+    const handleCloseEdit = () => {
+        setIsEditOpen(false);
+    }
+
+    const handleRowClick = (patient) => {
+        patientRef.current = patient;
     }
 
     const renderComponent = () => {
@@ -88,8 +104,15 @@ const DiabetesScreen = () => {
                         </div>
                     </div>
                 )}
+                {isEditOpen && (
+                    <div className="overlay">
+                        <div className="overlay-container">
+                            <EditPatientInfo data={patientRef.current} onClose={handleCloseEdit} />
+                        </div>
+                    </div>
+                )}
                 <ButtonsRow buttons={buttons} width={22} onClick={handleButtonClicked} />
-                <CustomTable data={patientData} columns={columns} onRowDoubleClick={() => { }} />
+                <CustomTable data={patientData} columns={columns} onRowDoubleClick={() => { }} onRowClick={handleRowClick} />
             </div>
         );
     }
