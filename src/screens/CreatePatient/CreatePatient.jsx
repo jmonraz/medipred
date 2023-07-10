@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { snakeCase } from 'lodash';
 import InputField from "../../components/InputField";
 import "./CreatePatient.css";
 
 const CreatePatient = ({ onCreate, onClose }) => {
+    const [requiredPopup, setRequiredPopup] = useState(false);
+    const [emailPopup, setEmailPopup] = useState(false);
+
     const [firstName, setFirstName] = useState('');
     const [middleName, setMiddleName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -74,63 +77,85 @@ const CreatePatient = ({ onCreate, onClose }) => {
         setCountry(event.target.value);
     }
 
+
+
     const handleSubmit = async event => {
         // Convert height and weight to decimal numbers and handle empty or whitespace-only values
         const parsedHeight = height === '' ? 0.0 : parseFloat(height);
         const parsedWeight = weight === '' ? 0.0 : parseFloat(weight);
 
         event.preventDefault();
-        try {
-            // make API request
-            const response = await fetch('http://127.0.0.1:8000/api/v1/patients/create/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    patient: {
-                        [snakeCase('firstName')]: firstName,
-                        [snakeCase('middleName')]: middleName,
-                        [snakeCase('lastName')]: lastName,
-                        [snakeCase('contactEmail')]: contactEmail,
-                        [snakeCase('contactPhone')]: contactPhone,
-                        [snakeCase('dateOfBirth')]: dateOfBirth,
-                        [snakeCase('height')]: parsedHeight,
-                        [snakeCase('weight')]: parsedWeight,
-                        [snakeCase('bloodGroup')]: bloodGroup,
-                        [snakeCase('gender')]: gender,
+        if (firstName && lastName && contactEmail && contactPhone && dateOfBirth) {
+            try {
+                // make API request
+                const response = await fetch('http://127.0.0.1:8000/api/v1/patients/create/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
                     },
-                    address: {
-                        [snakeCase('address1')]: address1,
-                        [snakeCase('address2')]: address2,
-                        [snakeCase('address3')]: address3,
-                        [snakeCase('city')]: city,
-                        [snakeCase('state')]: state,
-                        [snakeCase('postalCode')]: postalCode,
-                        [snakeCase('country')]: country,
-                    },
-                }),
+                    body: JSON.stringify({
+                        patient: {
+                            [snakeCase('firstName')]: firstName,
+                            [snakeCase('middleName')]: middleName,
+                            [snakeCase('lastName')]: lastName,
+                            [snakeCase('contactEmail')]: contactEmail,
+                            [snakeCase('contactPhone')]: contactPhone,
+                            [snakeCase('dateOfBirth')]: dateOfBirth,
+                            [snakeCase('height')]: parsedHeight,
+                            [snakeCase('weight')]: parsedWeight,
+                            [snakeCase('bloodGroup')]: bloodGroup,
+                            [snakeCase('gender')]: gender,
+                        },
+                        address: {
+                            [snakeCase('address1')]: address1,
+                            [snakeCase('address2')]: address2,
+                            [snakeCase('address3')]: address3,
+                            [snakeCase('city')]: city,
+                            [snakeCase('state')]: state,
+                            [snakeCase('postalCode')]: postalCode,
+                            [snakeCase('country')]: country,
+                        },
+                    }),
 
-            });
+                });
 
-            const data = await response.json();
+                const data = await response.json();
 
-            if (data.message === 'Patient created successfully') {
-                onCreate();
-            } else if (
-                data.error &&
-                data.error.contact_email &&
-                data.error.contact_email[0] === 'A user with the same email already exists.'
-            ) {
-                console.log('A user with the same email already exists.');
-                onCreate();
+                if (data.message === 'Patient created successfully') {
+                    onCreate();
+                } else if (
+                    data.error &&
+                    data.error.contact_email &&
+                    data.error.contact_email[0] === 'A user with the same email already exists.'
+                ) {
+                    console.log(data);
+                    setEmailPopup(true);
+                }
             }
-        }
-        catch (error) {
-            console.log('API error:', error);
+            catch (error) {
+                console.log('API error:', error);
+            }
+        } else {
+            setRequiredPopup(true);
         }
 
     }
+
+    useEffect(() => {
+        if (emailPopup) {
+            setTimeout(() => {
+                setEmailPopup(false);
+            }, 2000);
+        }
+    }, [emailPopup]);
+
+    useEffect(() => {
+        if (requiredPopup) {
+            setTimeout(() => {
+                setRequiredPopup(false);
+            }, 2000);
+        }
+    }, [requiredPopup]);
     return (
         <>
             <form onSubmit={handleSubmit} className="form-container">
@@ -146,15 +171,15 @@ const CreatePatient = ({ onCreate, onClose }) => {
                     <div className="form-row">
                         <div className="form-col">
                             <label>First Name*</label>
-                            <InputField id="firstName" placeholder="" value={firstName} onChange={handleFirstNameChange} required />
+                            <InputField id="firstName" placeholder="" value={firstName} onChange={handleFirstNameChange} />
                             <label>Middle Name</label>
                             <InputField id="middleName" placeholder="" value={middleName} onChange={handleMiddleNameChange} />
                             <label>Last Name*</label>
-                            <InputField id="lastName" placeholder="" value={lastName} onChange={handleLastNameChange} required />
+                            <InputField id="lastName" placeholder="" value={lastName} onChange={handleLastNameChange} />
                             <label>Contact Email*</label>
-                            <InputField id="contactEmail" placeholder="" value={contactEmail} onChange={handleContactEmailChange} required />
+                            <InputField id="contactEmail" placeholder="" value={contactEmail} onChange={handleContactEmailChange} />
                             <label>Contact Phone*</label>
-                            <InputField id="contactPhone" placeholder="" value={contactPhone} onChange={handleContactPhoneChange} required />
+                            <InputField id="contactPhone" placeholder="" value={contactPhone} onChange={handleContactPhoneChange} />
                         </div>
                         <div className="form-col">
                             <label>Gender</label>
@@ -163,7 +188,7 @@ const CreatePatient = ({ onCreate, onClose }) => {
                                 <option value="female">Female</option>
                             </select>
                             <label>DOB*</label>
-                            <InputField id="dob" placeholder="" value={dateOfBirth} onChange={handleDateOfBirthChange} type="date" required />
+                            <InputField id="dob" placeholder="" value={dateOfBirth} onChange={handleDateOfBirthChange} type="date" />
                             <label>Height (cm)</label>
                             <InputField id="height" placeholder="" value={height} onChange={handleHeightChange} type="number" />
                             <label>Weight (lbs)</label>
@@ -197,6 +222,16 @@ const CreatePatient = ({ onCreate, onClose }) => {
                     </div>
                 </div>
             </form>
+            {emailPopup && (
+                <div className="popup-message">
+                    <p>A patient with email inputted already exists.</p>
+                </div>
+            )}
+            {requiredPopup && (
+                <div className="popup-message">
+                    <p>Fill all required fields.</p>
+                </div>
+            )}
         </>
     )
 }

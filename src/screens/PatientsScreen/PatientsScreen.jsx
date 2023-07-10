@@ -12,6 +12,7 @@ import excelIcon from "../../assets/images/icons/excel_icon_green.png";
 import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
 
 const PatientsScreen = () => {
+
     const [patientData, setPatientData] = useState([]);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     const [isAddOpen, setIsAddOpen] = useState(false);
@@ -42,7 +43,7 @@ const PatientsScreen = () => {
         { 'icon': adobeIcon, 'label': 'adobe' },
     ];
     const columns = [
-        'First Name', 'Last Name', 'Height', 'Weight', 'Blood Group', 'Date Of Birth'
+        'First Name', 'Last Name', 'Height', 'Weight', 'Blood Group', 'Date Of Birth', 'Contact Email'
     ];
 
     const getData = async () => {
@@ -65,7 +66,8 @@ const PatientsScreen = () => {
             height: patient.height,
             weight: patient.weight,
             bloodGroup: patient.blood_group,
-            dateOfBirth: patient.date_of_birth
+            dateOfBirth: patient.date_of_birth,
+            email: patient.contact_email
         }));
     }
 
