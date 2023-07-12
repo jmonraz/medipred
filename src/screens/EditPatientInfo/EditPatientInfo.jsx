@@ -4,21 +4,22 @@ import FieldBox from "../../components/FieldBox";
 import SingleButton from "../../components/SingleButton";
 import { snakeCase } from "lodash";
 
-const EditPatientInfo = ({ onClose, data, diabetesData }) => {
+const EditPatientInfo = ({ onClose, patientData, analysisData, onUpdate }) => {
+    const analysisIdRef = React.useRef("");
 
-    const [firstName, setFirstName] = React.useState(data.firstName);
-    const [middleName, setMiddleName] = React.useState(data.middleName);
-    const [lastName, setLastName] = React.useState(data.lastName);
-    const [weight, setWeight] = React.useState(data.weight);
-    const [height, setHeight] = React.useState(data.height);
-    const [age, setAge] = React.useState(data.age);
-    const [gender, setGender] = React.useState(data.gender);
-    const [id, setId] = React.useState(data.id);
+    const [firstName, setFirstName] = React.useState(patientData.firstName);
+    const [middleName, setMiddleName] = React.useState(patientData.middleName);
+    const [lastName, setLastName] = React.useState(patientData.lastName);
+    const [weight, setWeight] = React.useState(patientData.weight);
+    const [height, setHeight] = React.useState(patientData.height);
+    const [age, setAge] = React.useState(patientData.age);
+    const [gender, setGender] = React.useState(patientData.gender);
+    const [id, setId] = React.useState(patientData.id);
 
-    const [glucose, setGlucose] = React.useState(diabetesData.glucose);
-    const [bloodPressure, setBloodPressure] = React.useState(diabetesData.bloodPressure);
-    const [insulin, setInsulin] = React.useState(diabetesData.insulin);
-    const [bmi, setBmi] = React.useState(diabetesData.bmi);
+    const [glucose, setGlucose] = React.useState(analysisData.glucose);
+    const [bloodPressure, setBloodPressure] = React.useState(analysisData.blood_pressure);
+    const [insulin, setInsulin] = React.useState(analysisData.insulin);
+    const [bmi, setBmi] = React.useState(analysisData.bmi);
 
     const handleGlucoseChange = event => {
         setGlucose(event.target.value);
@@ -36,49 +37,59 @@ const EditPatientInfo = ({ onClose, data, diabetesData }) => {
         setBmi(event.target.value);
     }
 
-    const analyze = async event => {
+    const updateAnalysis = async event => {
         event.preventDefault();
-        if (id !== '') {
-            if (glucose && bloodPressure && insulin && bmi) {
-                try {
-                    const response = await fetch('http://127.0.0.1:8000/api/v1/model/diabetes/predict/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
+
+        if (glucose && bloodPressure && insulin && bmi) {
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/v1/model/diabetes/predict/${analysisData.analysis_id}/`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        [snakeCase('glucose')]: glucose,
+                        [snakeCase('bloodPressure')]: bloodPressure,
+                        [snakeCase('insulin')]: insulin,
+                        [snakeCase('bmi')]: bmi,
+                    }),
+                });
+
+            } catch (error) {
+                console.log(error);
+            }
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/v1/model/diabetes/predict/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        patient: {
+                            [snakeCase('id')]: id,
                         },
-                        body: JSON.stringify({
-                            patient: {
-                                [snakeCase('id')]: id,
-                            },
-                            data: {
-                                [snakeCase('glucose')]: glucose,
-                                [snakeCase('bloodPressure')]: bloodPressure,
-                                [snakeCase('insulin')]: insulin,
-                                [snakeCase('bmi')]: bmi,
-                            }
-                        }),
-                    });
-                    const data = await response.json();
-                    if (data.message === 'Analysis successful') {
-                        // onCreate('');
-                    } else if (data.message === 'Diabetes analysis already exists for this patient') {
-
-                    }
-
-                } catch (error) {
-                    console.log(error);
-                }
-            } else {
-
+                        data: {
+                            [snakeCase('glucose')]: glucose,
+                            [snakeCase('bloodPressure')]: bloodPressure,
+                            [snakeCase('insulin')]: insulin,
+                            [snakeCase('bmi')]: bmi,
+                        }
+                    }),
+                });
+                const data = await response.json();
+                console.log(data);
+            } catch (error) {
+                console.log(error);
             }
         } else {
-
+            console.log('blank values');
         }
+        onUpdate();
     }
 
     return (
         <>
-            <form onSubmit={analyze} className="form-container">
+            <form onSubmit={updateAnalysis} className="form-container">
                 <div className="patient-info-banner">
                     <p>Patient Information</p>
                     <div className="flex-row">
@@ -133,5 +144,6 @@ const EditPatientInfo = ({ onClose, data, diabetesData }) => {
         </>
     );
 };
+
 
 export default EditPatientInfo;

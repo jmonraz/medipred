@@ -8,7 +8,6 @@ import './App.css'
 
 const App = () => {
   const { authenticated } = useContext(UserContext);
-  const [formSubmitted, setFormSubmitted] = useState(false);
 
   useEffect(() => {
     if (authenticated) {
@@ -19,9 +18,6 @@ const App = () => {
 
   }, [authenticated]);
 
-  const handleFormSubmit = () => {
-    setFormSubmitted(true);
-  }
 
   return (
     <div className="app-container">
@@ -29,7 +25,7 @@ const App = () => {
         <Routes>
           <Route
             path="/"
-            element={<LoginForm onFormSubmit={handleFormSubmit} />} />
+            element={<LoginForm />} />
           <Route
             path="/home/*"
             element={authenticated ? (

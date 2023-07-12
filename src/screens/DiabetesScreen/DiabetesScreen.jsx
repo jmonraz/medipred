@@ -13,8 +13,10 @@ import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
 
 const DiabetesScreen = () => {
 
-    const patientRef = useRef("");
-    const diabetesRef = useRef("");
+    const patientRef = React.useRef("");
+
+    const [analysisData, setAnalysisData] = React.useState([]);
+    const [filteredAnalysisData, setFilteredAnalysisData] = React.useState([]);
 
     const [isDataLoaded, setIsDataLoaded] = React.useState(false);
     const [patientData, setPatientData] = React.useState([]);
@@ -34,21 +36,28 @@ const DiabetesScreen = () => {
         { 'icon': adobeIcon, 'label': 'adobe' },
     ];
 
-    React.useEffect(() => {
-        getData();
-    },)
-
     const getData = async () => {
         try {
             const response = await fetch("http://127.0.0.1:8000/api/v1/diabetes/");
             const data = await response.json();
+            console.log(data);
+            const fullData = data.data;
+            setAnalysisData(fullData);
+            console.log(fullData);
             const formattedData = formatData(data.data);
             setPatientData(formattedData);
             setIsDataLoaded(true);
         } catch (error) {
             console.log(error);
         }
+
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            getData();
+        }, 2000);
+    }, []);
 
     const formatData = (data) => {
         return data.map(data => ({
@@ -71,8 +80,6 @@ const DiabetesScreen = () => {
             setIsAddOpen(true);
         }
         if (label == 'edit' && patientRef.current !== "") {
-            diabetesRef.current = patientData.filter((patient) => patient.id === patientRef.current.id);
-            console.log(diabetesRef);
             setIsEditOpen(true);
         }
     }
@@ -83,42 +90,57 @@ const DiabetesScreen = () => {
 
     const handleAnalyze = () => {
         setIsAddOpen(false);
-        getData();
     }
 
     const handleCloseEdit = () => {
         setIsEditOpen(false);
     }
 
+    const handleUpdateEdit = () => {
+        setIsEditOpen(false);
+        getData();
+    }
+
     const handleRowClick = (patient) => {
         patientRef.current = patient;
+        const filteredAnalysisData = analysisData.filter((item, index) => patient.id === item.id);
+        setFilteredAnalysisData(filteredAnalysisData);
+        console.log(filteredAnalysisData);
     }
 
     const renderComponent = () => {
         if (!isDataLoaded) {
-            return <div>Loading...</div>
+            return (
+                <div>
+                    <p>Loading...</p>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    {isAddOpen && (
+                        <div className="overlay">
+                            <div className="overlay-container">
+                                <PatientInfo onCreate={handleAnalyze} onClose={handleCloseAdd} />
+                            </div>
+                        </div>
+                    )}
+                    {isEditOpen && (
+                        <div className="overlay">
+                            <div className="overlay-container">
+                                <EditPatientInfo patientData={patientRef.current} analysisData={filteredAnalysisData[0]} onClose={handleCloseEdit} onUpdate={handleUpdateEdit} />
+                            </div>
+                        </div>
+                    )}
+                    <ButtonsRow buttons={buttons} width={22} onClick={handleButtonClicked} />
+                    <CustomTable data={patientData} columns={columns} onRowDoubleClick={() => { }} onRowClick={handleRowClick} />
+
+                </div>
+            )
         }
-        return (
-            <div>
-                {isAddOpen && (
-                    <div className="overlay">
-                        <div className="overlay-container">
-                            <PatientInfo onCreate={handleAnalyze} onClose={handleCloseAdd} />
-                        </div>
-                    </div>
-                )}
-                {isEditOpen && (
-                    <div className="overlay">
-                        <div className="overlay-container">
-                            <EditPatientInfo diabetesData={diabetesRef.current[0]} data={patientRef.current} onClose={handleCloseEdit} />
-                        </div>
-                    </div>
-                )}
-                <ButtonsRow buttons={buttons} width={22} onClick={handleButtonClicked} />
-                <CustomTable data={patientData} columns={columns} onRowDoubleClick={() => { }} onRowClick={handleRowClick} />
-            </div>
-        );
+
     }
+
     return (
         <>
             {renderComponent()}

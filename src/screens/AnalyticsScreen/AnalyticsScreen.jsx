@@ -6,7 +6,7 @@ import "./AnalyticsScreen.css";
 
 
 const AnalyticsScreen = () => {
-    const [selectedMenuItem, setSelectedMenuItem] = React.useState('');
+    const [selectedMenuItem, setSelectedMenuItem] = React.useState(null);
 
     const handleMenuItemClick = item => {
         console.log(item);
@@ -37,7 +37,6 @@ const AnalyticsScreen = () => {
     return (
         <>
             <OverlayBox>
-
                 {renderComponent()}
             </OverlayBox>
         </>

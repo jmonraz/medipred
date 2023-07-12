@@ -5,7 +5,7 @@ import FormButton from "../../components/FormButton";
 import { UserContext } from "../../contexts/UserContext";
 import './LoginForm.css';
 
-const LoginForm = ({ onFormSubmit }) => {
+const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginMessage, setLoginMessage] = useState('');
