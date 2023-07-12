@@ -67,7 +67,7 @@ const HomeScreen = () => {
     }
 
     return (
-        <div className="parent-container dashboard">
+        <div className="dashboard">
             <Banner onToggleHamburgerMenu={handleToggleHamburgerMenu} onToggleUserMenu={handleToggleUserMenu} />
             {isHamburgerMenuOpen && <Menu menuItems={hamburgerMenuItems} position="start" onClick={handleMenuItemClick} />}
             {isUserMenuOpen && <Menu menuItems={userMenuItems} position="end" onClick={handleMenuItemClick} />}

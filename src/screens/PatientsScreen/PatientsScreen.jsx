@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import ButtonsRow from "../../components/ButtonsRow";
 import CustomTable from "../../components/CustomTable";
@@ -10,12 +10,17 @@ import blockIcon from "../../assets/images/icons/block_icon_red.png";
 import searchIcon from "../../assets/images/icons/search_icon_black.png";
 import excelIcon from "../../assets/images/icons/excel_icon_green.png";
 import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
+import EditPatient from "../EditPatient/EditPatient";
 
 const PatientsScreen = () => {
 
+    const patientRef = useRef("");
+
     const [patientData, setPatientData] = useState([]);
+    const [patientFullData, setPatientFullData] = useState([]);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     const [isAddOpen, setIsAddOpen] = useState(false);
+    const [isEditOpen, setIsEditOpen] = useState(false);
 
     useEffect(() => {
         getData();
@@ -25,9 +30,15 @@ const PatientsScreen = () => {
         if (label === 'add') {
             setIsAddOpen(true);
         }
+        if (label === 'edit') {
+            setIsEditOpen(true);
+        }
     }
     const handleCloseAdd = () => {
         setIsAddOpen(false);
+    }
+    const handleCloseEdit = () => {
+        setIsEditOpen(false);
     }
     const handleCreatePatientButton = item => {
         setIsAddOpen(false);
@@ -50,7 +61,7 @@ const PatientsScreen = () => {
         try {
             const response = await fetch("http://127.0.0.1:8000/api/v1/patients/");
             const data = await response.json();
-
+            setPatientFullData(data.patients);
             const formattedData = formatData(data.patients);
             setPatientData(formattedData);
             setIsDataLoaded(true);
@@ -72,13 +83,17 @@ const PatientsScreen = () => {
         }));
     }
 
+    const handleRowClick = (patient) => {
+        patientRef.current = patient;
+        patientRef.current = patientFullData.filter((item, index) => patient.id === item.id);
+    }
+
     const renderComponent = () => {
         if (!isDataLoaded) {
             return <div>Loading...</div>
         } else {
             return (
-                <div>
-
+                <div className="main-container">
                     {isAddOpen && (
                         <div className="overlay">
                             <div className="overlay-container">
@@ -86,16 +101,19 @@ const PatientsScreen = () => {
                             </div>
                         </div>
                     )}
-
+                    {isEditOpen && (
+                        <div className="overlay">
+                            <div className="overlay-container">
+                                <EditPatient onCreate={() => { }} onClose={handleCloseEdit} data={patientRef.current[0]} />
+                            </div>
+                        </div>
+                    )}
                     <ButtonsRow buttons={buttons} width={22} onClick={handleButtonClicked} />
-                    <CustomTable data={patientData} columns={columns} onRowDoubleClick={() => { }} onRowClick={() => { }} />
+                    <CustomTable data={patientData} columns={columns} onRowDoubleClick={() => { }} onRowClick={handleRowClick} />
                 </div>
             );
         }
-
-
     }
-
     return (
         <>
             <OverlayBox>

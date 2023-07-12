@@ -57,22 +57,19 @@ const SearchScreen = ({ getPatientData, onClose }) => {
     const columns = ['First Name', 'Last Name', 'Age', 'Gender', 'Height (cm)', 'Weight (lb)', 'Blood Group', 'Date Of Birth'];
 
     return (
-        <div className="main-container">
+        <>
             <div className="flex-row-spread">
+
                 <h6>Search Patient</h6>
                 <p className="bold-letters big close" onClick={onClose}>X</p>
             </div>
             <div className="flex-row">
-                <label className="flex-item">First Name</label>
+                <label className="flex-label">First Name</label>
                 <InputField id="search" placeholder="" value={firstName} onChange={handleFirstNameChange} />
             </div>
-            <div className="sub-container">
+            <CustomTable data={filteredPatientData.length > 0 ? filteredPatientData : patientData} columns={columns} onRowDoubleClick={handleRowDoubleClick} onRowClick={() => { }} />
 
-                <div className="flex-row">
-                    <CustomTable data={filteredPatientData.length > 0 ? filteredPatientData : patientData} columns={columns} onRowDoubleClick={handleRowDoubleClick} onRowClick={() => { }} />
-                </div>
-            </div>
-        </div>
+        </>
 
     )
 }

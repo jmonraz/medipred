@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import ButtonsRow from "../../components/ButtonsRow";
 import CustomTable from "../../components/CustomTable";
 import PatientInfo from "../PatientInfo/PatientInfo";
-import EditPatientInfo from "../EditPatientInfo/EditPatientInfo";
+import EditAnalysis from "../EditAnalysis/EditAnalysis";
 import addIcon from "../../assets/images/icons/add_icon_green.png";
 import editIcon from "../../assets/images/icons/edit_icon_orange.png";
 import blockIcon from "../../assets/images/icons/block_icon_red.png";
@@ -117,7 +117,7 @@ const DiabetesScreen = () => {
             )
         } else {
             return (
-                <div>
+                <div className="main-container">
                     {isAddOpen && (
                         <div className="overlay">
                             <div className="overlay-container">
@@ -128,13 +128,12 @@ const DiabetesScreen = () => {
                     {isEditOpen && (
                         <div className="overlay">
                             <div className="overlay-container">
-                                <EditPatientInfo patientData={patientRef.current} analysisData={filteredAnalysisData[0]} onClose={handleCloseEdit} onUpdate={handleUpdateEdit} />
+                                <EditAnalysis patientData={patientRef.current} analysisData={filteredAnalysisData[0]} onClose={handleCloseEdit} onUpdate={handleUpdateEdit} />
                             </div>
                         </div>
                     )}
                     <ButtonsRow buttons={buttons} width={22} onClick={handleButtonClicked} />
                     <CustomTable data={patientData} columns={columns} onRowDoubleClick={() => { }} onRowClick={handleRowClick} />
-
                 </div>
             )
         }

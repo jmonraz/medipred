@@ -1,7 +1,6 @@
 import React from "react";
 import InputField from "../../components/InputField";
 import FieldBox from "../../components/FieldBox";
-import SingleButton from "../../components/SingleButton";
 import { snakeCase } from "lodash";
 
 const EditPatientInfo = ({ onClose, patientData, analysisData, onUpdate }) => {

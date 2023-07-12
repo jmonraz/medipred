@@ -3,17 +3,10 @@
     width: 100%;
 }
 
-.sub-container {
-    height: 85%;
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: auto;
-}
-
 .flex-row {
     display: flex;
+    padding: 0px 0px 4px 0px;
     align-items: center;
-    margin: 10px 0;
 }
 
 .flex-row-spread {
@@ -39,5 +32,9 @@
 }
 
 .flex-row input {
-    padding: 8px;
+    padding: 4px;
+}
+
+.flex-label {
+    margin-right: 20px;
 }
