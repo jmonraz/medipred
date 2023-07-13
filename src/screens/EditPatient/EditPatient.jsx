@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import InputField from "../../components/InputField";
 import FieldBox from "../../components/FieldBox";
 import { snakeCase } from "lodash";
 
-const EditPatient = ({ onClose, data, onUpdate }) => {
+const EditPatient = ({ onClose, patientData, addressData, onUpdate }) => {
 
-    const [firstName, setFirstName] = useState('');
-    const [middleName, setMiddleName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [contactEmail, setContactEmail] = useState('');
-    const [contactPhone, setContactPhone] = useState('');
-    const [gender, setGender] = useState(data.gender);
-    const [dateOfBirth, setDateOfBirth] = useState('');
-    const [height, setHeight] = useState('');
-    const [weight, setWeight] = useState('');
-    const [bloodGroup, setBloodGroup] = useState('');
+    const [firstName, setFirstName] = useState(patientData.first_name);
+    const [middleName, setMiddleName] = useState(patientData.middle_name);
+    const [lastName, setLastName] = useState(patientData.last_name);
+    const [contactEmail, setContactEmail] = useState(patientData.contact_email);
+    const [contactPhone, setContactPhone] = useState(patientData.contact_phone);
+    const [gender, setGender] = useState(patientData.gender);
+    const [dateOfBirth, setDateOfBirth] = useState(patientData.date_of_birth);
+    const [height, setHeight] = useState(patientData.height);
+    const [weight, setWeight] = useState(patientData.weight);
+    const [bloodGroup, setBloodGroup] = useState(patientData.blood_group);
+
     const [address1, setAddress1] = useState('');
     const [address2, setAddress2] = useState('');
     const [address3, setAddress3] = useState('');
@@ -22,6 +23,21 @@ const EditPatient = ({ onClose, data, onUpdate }) => {
     const [state, setState] = useState('');
     const [postalCode, setPostalCode] = useState('');
     const [country, setCountry] = useState('');
+
+
+    useEffect(() => {
+        if (addressData.length > 0) {
+            setAddress1(addressData[0]['address1']);
+            setAddress2(addressData[0]['address2']);
+            setAddress3(addressData[0]['address3']);
+            setCity(addressData[0]['city']);
+            setState(addressData[0]['state']);
+            setPostalCode(addressData[0]['postalCode']);
+            setCountry(addressData[0]['country']);
+        }
+        console.log(patientData.id);
+        console.log(addressData);
+    }, []);
 
     const handleFirstNameChange = event => {
         setFirstName(event.target.value);
@@ -75,11 +91,48 @@ const EditPatient = ({ onClose, data, onUpdate }) => {
         setCountry(event.target.value);
     }
 
-    const handleSubmit = () => { };
+    const updatePatient = async event => {
+        event.preventDefault();
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/api/v1/patients/edit/${patientData.id}/`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    patient: {
+                        [snakeCase('firstName')]: firstName,
+                        [snakeCase('middleName')]: middleName,
+                        [snakeCase('lastName')]: lastName,
+                        [snakeCase('contactEmail')]: contactEmail,
+                        [snakeCase('contactPhone')]: contactPhone,
+                        [snakeCase('height')]: height,
+                        [snakeCase('weight')]: weight,
+                        [snakeCase('bloodGroup')]: bloodGroup,
+                    },
+                    address: {
+                        // [snakeCase('id')]: addressData[0]['id'],
+                        [snakeCase('address1')]: address1,
+                        [snakeCase('address2')]: address2,
+                        [snakeCase('address3')]: address3,
+                        [snakeCase('city')]: city,
+                        [snakeCase('state')]: state,
+                        [snakeCase('postalCode')]: postalCode,
+                        [snakeCase('country')]: country,
+                    }
+                }),
+            });
+            const data = await response.json();
+            console.log(data);
+            onUpdate();
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <>
-            <form onSubmit={handleSubmit} className="form-container">
+            <form onSubmit={updatePatient} className="form-container">
                 <div className="create-patient-banner">
                     <p>Create Patient</p>
                     <div className="flex-row space">

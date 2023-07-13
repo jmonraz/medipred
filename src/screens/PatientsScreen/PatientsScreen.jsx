@@ -14,13 +14,17 @@ import EditPatient from "../EditPatient/EditPatient";
 
 const PatientsScreen = () => {
 
-    const patientRef = useRef("");
+    const addressIdRef = useRef(null);
+
+    const patientRef = useRef([]);
 
     const [patientData, setPatientData] = useState([]);
     const [patientFullData, setPatientFullData] = useState([]);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     const [isAddOpen, setIsAddOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
+    const [addressData, setAddressData] = useState([]);
+
 
     useEffect(() => {
         getData();
@@ -39,9 +43,15 @@ const PatientsScreen = () => {
     }
     const handleCloseEdit = () => {
         setIsEditOpen(false);
+        setAddressData([]);
     }
     const handleCreatePatientButton = item => {
         setIsAddOpen(false);
+        getData();
+    }
+    const handleUpdatePatientButton = item => {
+        setIsEditOpen(false);
+        setAddressData([]);
         getData();
     }
 
@@ -70,6 +80,20 @@ const PatientsScreen = () => {
         }
     }
 
+    const getAddress = async () => {
+        if (addressIdRef.current !== null) {
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/v1/address/${addressIdRef.current}/`)
+                const data = await response.json();
+                const formattedData = formatAddressData(data.data);
+                console.log(formattedData);
+                setAddressData(formattedData);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
     const formatData = (patients) => {
         return patients.map(patient => ({
             id: patient.id,
@@ -83,9 +107,26 @@ const PatientsScreen = () => {
         }));
     }
 
+    const formatAddressData = address => {
+        return [
+            {
+                id: address.id,
+                address1: address.address_1,
+                address2: address.address_2,
+                address3: address.address_3,
+                city: address.city,
+                state: address.state,
+                postalCode: address.postal_code,
+                country: address.country
+            }
+        ]
+    }
+
     const handleRowClick = (patient) => {
         patientRef.current = patient;
         patientRef.current = patientFullData.filter((item, index) => patient.id === item.id);
+        addressIdRef.current = patientRef.current[0]['address'];
+        getAddress();
     }
 
     const renderComponent = () => {
@@ -104,7 +145,7 @@ const PatientsScreen = () => {
                     {isEditOpen && (
                         <div className="overlay">
                             <div className="overlay-container">
-                                <EditPatient onCreate={() => { }} onClose={handleCloseEdit} data={patientRef.current[0]} />
+                                <EditPatient onUpdate={handleUpdatePatientButton} onClose={handleCloseEdit} patientData={patientRef.current[0]} addressData={addressData} />
                             </div>
                         </div>
                     )}
