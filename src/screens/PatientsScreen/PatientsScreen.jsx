@@ -18,6 +18,7 @@ import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
 
 // utils
 import { snakeCase } from "lodash";
+import { isDisabled } from "@testing-library/user-event/dist/utils";
 
 
 const PatientsScreen = () => {
@@ -25,6 +26,9 @@ const PatientsScreen = () => {
     const addressIdRef = useRef(null);
 
     const patientRef = useRef("");
+
+    const [disabledPopup, setDisabledPopup] = useState(false);
+    const [updatedPopup, setUpdatedPopup] = useState(false);
 
     const [patientData, setPatientData] = useState([]);
     const [patientFullData, setPatientFullData] = useState([]);
@@ -72,6 +76,7 @@ const PatientsScreen = () => {
                     const data = await response.json();
                     console.log(data);
                     getData();
+                    setDisabledPopup(true);
                 } catch (error) {
                     console.log(error);
                 }
@@ -95,6 +100,7 @@ const PatientsScreen = () => {
     }
     const handleUpdatePatientButton = item => {
         setIsEditOpen(false);
+        setUpdatedPopup(true);
         setAddressData([]);
         getData();
     }
@@ -182,6 +188,22 @@ const PatientsScreen = () => {
         getAddress();
     }
 
+    useEffect(() => {
+        if (updatedPopup) {
+            setTimeout(() => {
+                setUpdatedPopup(false);
+            }, 2000);
+        }
+    }, [disabledPopup]);
+
+    useEffect(() => {
+        if (disabledPopup) {
+            setTimeout(() => {
+                setDisabledPopup(false);
+            }, 2000);
+        }
+    }, [disabledPopup]);
+
     const renderComponent = () => {
         if (!isDataLoaded) {
             return <div>Loading...</div>
@@ -211,6 +233,16 @@ const PatientsScreen = () => {
                     )}
                     <ButtonsRow buttons={buttons} width={22} onClick={handleButtonClicked} />
                     <CustomTable data={filteredPatientData.length > 0 ? filteredPatientData : patientData} columns={columns} onRowDoubleClick={() => { }} onRowClick={handleRowClick} />
+                    {disabledPopup && (
+                        <div className="popup-message">
+                            <p>Patient disabled.</p>
+                        </div>
+                    )}
+                    {updatedPopup && (
+                        <div className="popup-message">
+                            <p>Patient updated.</p>
+                        </div>
+                    )}
                 </div>
             );
         }
