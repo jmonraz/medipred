@@ -21,7 +21,7 @@ const PatientsScreen = () => {
 
     const addressIdRef = useRef(null);
 
-    const patientRef = useRef([]);
+    const patientRef = useRef("");
 
     const [patientData, setPatientData] = useState([]);
     const [patientFullData, setPatientFullData] = useState([]);
@@ -44,7 +44,7 @@ const PatientsScreen = () => {
         if (label === 'add') {
             setIsAddOpen(true);
         }
-        if (label === 'edit') {
+        if (label === 'edit' && patientRef.current !== "") {
             setIsEditOpen(true);
         }
         if (label === 'search') {

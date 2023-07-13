@@ -1,8 +1,13 @@
 import React, { useEffect, useRef } from "react";
+
+// components
 import ButtonsRow from "../../components/ButtonsRow";
 import CustomTable from "../../components/CustomTable";
 import PatientInfo from "../PatientInfo/PatientInfo";
 import EditAnalysis from "../EditAnalysis/EditAnalysis";
+import SearchBox from "../../components/SearchBox/SearchBox";
+
+// icons
 import addIcon from "../../assets/images/icons/add_icon_green.png";
 import editIcon from "../../assets/images/icons/edit_icon_orange.png";
 import blockIcon from "../../assets/images/icons/block_icon_red.png";
@@ -15,13 +20,17 @@ const DiabetesScreen = () => {
 
     const patientRef = React.useRef("");
 
+    const [patientData, setPatientData] = React.useState([]);
+    const [filteredPatientData, setFilteredPatientData] = React.useState([]);
     const [analysisData, setAnalysisData] = React.useState([]);
     const [filteredAnalysisData, setFilteredAnalysisData] = React.useState([]);
 
+
     const [isDataLoaded, setIsDataLoaded] = React.useState(false);
-    const [patientData, setPatientData] = React.useState([]);
+
     const [isAddOpen, setIsAddOpen] = React.useState(false);
     const [isEditOpen, setIsEditOpen] = React.useState(false);
+    const [isSearchOpen, setIsSearchOpen] = React.useState(false);
 
     const columns = [
         'First Name', 'Last Name', 'Gender', 'Age', 'Glucose', 'Blood Pressure', 'Insulin', 'BMI', 'Outcome', 'Last Checked',
@@ -79,8 +88,11 @@ const DiabetesScreen = () => {
         if (label === 'add') {
             setIsAddOpen(true);
         }
-        if (label == 'edit' && patientRef.current !== "") {
+        if (label === 'edit' && patientRef.current !== "") {
             setIsEditOpen(true);
+        }
+        if (label === 'search') {
+            setIsSearchOpen(true);
         }
     }
 
@@ -99,6 +111,14 @@ const DiabetesScreen = () => {
     const handleUpdateEdit = () => {
         setIsEditOpen(false);
         getData();
+    }
+    const handleCloseSearch = () => {
+        setIsSearchOpen(false);
+    }
+    const handleSearch = item => {
+        setIsSearchOpen(false);
+        const filteredData = patientData.filter(patient => patient.firstName.toLowerCase().includes(item.toLowerCase()));
+        setFilteredPatientData(filteredData);
     }
 
     const handleRowClick = (patient) => {
@@ -132,8 +152,15 @@ const DiabetesScreen = () => {
                             </div>
                         </div>
                     )}
+                    {isSearchOpen && (
+                        <div className="overlay">
+                            <div className="overlay-column">
+                                <SearchBox onClose={handleCloseSearch} onSearch={handleSearch} />
+                            </div>
+                        </div>
+                    )}
                     <ButtonsRow buttons={buttons} width={22} onClick={handleButtonClicked} />
-                    <CustomTable data={patientData} columns={columns} onRowDoubleClick={() => { }} onRowClick={handleRowClick} />
+                    <CustomTable data={filteredPatientData.length > 0 ? filteredPatientData : patientData} columns={columns} onRowDoubleClick={() => { }} onRowClick={handleRowClick} />
                 </div>
             )
         }
