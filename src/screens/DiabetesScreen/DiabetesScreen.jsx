@@ -14,6 +14,7 @@ import blockIcon from "../../assets/images/icons/block_icon_red.png";
 import searchIcon from "../../assets/images/icons/search_icon_black.png";
 import excelIcon from "../../assets/images/icons/excel_icon_green.png";
 import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
+import reloadIcon from "../../assets/images/icons/reload_grey_icon.png";
 
 
 const DiabetesScreen = () => {
@@ -43,6 +44,7 @@ const DiabetesScreen = () => {
         { 'icon': searchIcon, 'label': 'search' },
         { 'icon': excelIcon, 'label': 'excel' },
         { 'icon': adobeIcon, 'label': 'adobe' },
+        { 'icon': reloadIcon, 'label': 'reload' },
     ];
 
     const getData = async () => {
@@ -66,7 +68,7 @@ const DiabetesScreen = () => {
         setTimeout(() => {
             getData();
         }, 2000);
-    }, []);
+    }, [isDataLoaded]);
 
     const formatData = (data) => {
         return data.map(data => ({
@@ -93,6 +95,10 @@ const DiabetesScreen = () => {
         }
         if (label === 'search') {
             setIsSearchOpen(true);
+        }
+        if (label === 'reload') {
+            setIsDataLoaded(false);
+            setFilteredPatientData([]);
         }
     }
 
