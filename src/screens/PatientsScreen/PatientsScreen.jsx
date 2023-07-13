@@ -1,16 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
 
+// components
 import ButtonsRow from "../../components/ButtonsRow";
 import CustomTable from "../../components/CustomTable";
 import CreatePatient from "../CreatePatient/CreatePatient";
+import EditPatient from "../EditPatient/EditPatient";
+import SearchBox from "../../components/SearchBox/SearchBox";
 import OverlayBox from "../../components/OverlayBox";
+
+// icons
 import addIcon from "../../assets/images/icons/add_icon_green.png";
 import editIcon from "../../assets/images/icons/edit_icon_orange.png";
 import blockIcon from "../../assets/images/icons/block_icon_red.png";
 import searchIcon from "../../assets/images/icons/search_icon_black.png";
 import excelIcon from "../../assets/images/icons/excel_icon_green.png";
 import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
-import EditPatient from "../EditPatient/EditPatient";
+
 
 const PatientsScreen = () => {
 
@@ -23,6 +28,7 @@ const PatientsScreen = () => {
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     const [isAddOpen, setIsAddOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [addressData, setAddressData] = useState([]);
 
 
@@ -37,6 +43,9 @@ const PatientsScreen = () => {
         if (label === 'edit') {
             setIsEditOpen(true);
         }
+        if (label === 'search') {
+            setIsSearchOpen(true);
+        }
     }
     const handleCloseAdd = () => {
         setIsAddOpen(false);
@@ -44,6 +53,9 @@ const PatientsScreen = () => {
     const handleCloseEdit = () => {
         setIsEditOpen(false);
         setAddressData([]);
+    }
+    const handleCloseSeach = () => {
+        setIsSearchOpen(false);
     }
     const handleCreatePatientButton = item => {
         setIsAddOpen(false);
@@ -53,6 +65,9 @@ const PatientsScreen = () => {
         setIsEditOpen(false);
         setAddressData([]);
         getData();
+    }
+    const handleSearch = item => {
+        setIsSearchOpen(false);
     }
 
     const buttons = [
@@ -146,6 +161,13 @@ const PatientsScreen = () => {
                         <div className="overlay">
                             <div className="overlay-container">
                                 <EditPatient onUpdate={handleUpdatePatientButton} onClose={handleCloseEdit} patientData={patientRef.current[0]} addressData={addressData} />
+                            </div>
+                        </div>
+                    )}
+                    {isSearchOpen && (
+                        <div className="overlay">
+                            <div className="overlay-column">
+                                <SearchBox onClose={handleCloseSeach} onSearch={handleSearch} />
                             </div>
                         </div>
                     )}

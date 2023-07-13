@@ -160,7 +160,7 @@ const PatientInfo = ({ onCreate, onClose }) => {
                             <p className="close left-space bold-letters big" onClick={onClose}>X</p>
                         </div>
                     </div>
-                    <div className="form-sub-container alt-container">
+                    <div className="form-sub-container">
                         <div className="flex-row-start">
                             <h6 className="form-sub">Information</h6>
                             <SingleButton button={button} onClick={handleSearchClick} width={22} />

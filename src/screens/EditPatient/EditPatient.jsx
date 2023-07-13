@@ -35,8 +35,6 @@ const EditPatient = ({ onClose, patientData, addressData, onUpdate }) => {
             setPostalCode(addressData[0]['postalCode']);
             setCountry(addressData[0]['country']);
         }
-        console.log(patientData.id);
-        console.log(addressData);
     }, []);
 
     const handleFirstNameChange = event => {

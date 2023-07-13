@@ -1,7 +1,7 @@
 .patient-info-banner {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 .flex-row-start {
@@ -10,7 +10,6 @@
     flex-direction: column;
     align-items: start;
 }
-
 
 .center-letters {
     text-align: center;
@@ -50,7 +49,6 @@
 .overlay-container {
     height: 95%;
     margin: 20px;
-    background-color: aliceblue;
     padding: 10px 25px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgb(0, 0, 0, 0.5);
