@@ -25,11 +25,15 @@ const PatientsScreen = () => {
 
     const [patientData, setPatientData] = useState([]);
     const [patientFullData, setPatientFullData] = useState([]);
+    const [addressData, setAddressData] = useState([]);
+    const [filteredPatientData, setFilteredPatientData] = React.useState([]);
+
     const [isDataLoaded, setIsDataLoaded] = useState(false);
+
     const [isAddOpen, setIsAddOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
-    const [addressData, setAddressData] = useState([]);
+
 
 
     useEffect(() => {
@@ -68,6 +72,8 @@ const PatientsScreen = () => {
     }
     const handleSearch = item => {
         setIsSearchOpen(false);
+        const filteredData = patientData.filter(patient => patient.firstName.toLowerCase().includes(item.toLowerCase()));
+        setFilteredPatientData(filteredData);
     }
 
     const buttons = [
@@ -172,7 +178,7 @@ const PatientsScreen = () => {
                         </div>
                     )}
                     <ButtonsRow buttons={buttons} width={22} onClick={handleButtonClicked} />
-                    <CustomTable data={patientData} columns={columns} onRowDoubleClick={() => { }} onRowClick={handleRowClick} />
+                    <CustomTable data={filteredPatientData.length > 0 ? filteredPatientData : patientData} columns={columns} onRowDoubleClick={() => { }} onRowClick={handleRowClick} />
                 </div>
             );
         }
