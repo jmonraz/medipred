@@ -16,6 +16,9 @@ import searchIcon from "../../assets/images/icons/search_icon_black.png";
 import excelIcon from "../../assets/images/icons/excel_icon_green.png";
 import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
 
+// utils
+import { snakeCase } from "lodash";
+
 
 const PatientsScreen = () => {
 
@@ -49,6 +52,31 @@ const PatientsScreen = () => {
         }
         if (label === 'search') {
             setIsSearchOpen(true);
+        }
+        if (label === 'block' && patientRef.current !== "") {
+            const blockUser = async () => {
+                try {
+                    const response = await fetch(`http://127.0.0.1:8000/api/v1/patients/edit/${patientRef.current[0]['id']}/`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            patient: {
+                                [snakeCase('enabled')]: false,
+                            },
+                            address: {
+                            }
+                        }),
+                    });
+                    const data = await response.json();
+                    console.log(data);
+                    getData();
+                } catch (error) {
+                    console.log(error);
+                }
+            };
+            blockUser();
         }
     }
     const handleCloseAdd = () => {
@@ -93,6 +121,7 @@ const PatientsScreen = () => {
         try {
             const response = await fetch("http://127.0.0.1:8000/api/v1/patients/");
             const data = await response.json();
+            console.log(data);
             setPatientFullData(data.patients);
             const formattedData = formatData(data.patients);
             setPatientData(formattedData);
@@ -117,16 +146,18 @@ const PatientsScreen = () => {
     }
 
     const formatData = (patients) => {
-        return patients.map(patient => ({
-            id: patient.id,
-            firstName: patient.first_name,
-            lastName: patient.last_name,
-            height: patient.height,
-            weight: patient.weight,
-            bloodGroup: patient.blood_group,
-            dateOfBirth: patient.date_of_birth,
-            email: patient.contact_email
-        }));
+        return patients
+            .filter(patient => patient.enabled)
+            .map(patient => ({
+                id: patient.id,
+                firstName: patient.first_name,
+                lastName: patient.last_name,
+                height: patient.height,
+                weight: patient.weight,
+                bloodGroup: patient.blood_group,
+                dateOfBirth: patient.date_of_birth,
+                email: patient.contact_email
+            }));
     }
 
     const formatAddressData = address => {

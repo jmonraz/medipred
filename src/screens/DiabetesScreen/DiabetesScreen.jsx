@@ -119,6 +119,7 @@ const DiabetesScreen = () => {
         setIsSearchOpen(false);
         const filteredData = patientData.filter(patient => patient.firstName.toLowerCase().includes(item.toLowerCase()));
         setFilteredPatientData(filteredData);
+        patientRef.current = "";
     }
 
     const handleRowClick = (patient) => {

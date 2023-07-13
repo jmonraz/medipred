@@ -52,12 +52,6 @@ const EditPatient = ({ onClose, patientData, addressData, onUpdate }) => {
     const handleContactPhoneChange = event => {
         setContactPhone(event.target.value);
     }
-    const handleGenderChange = event => {
-        setGender(event.target.value);
-    }
-    const handleDateOfBirthChange = event => {
-        setDateOfBirth(event.target.value);
-    }
     const handleHeightChange = event => {
         setHeight(event.target.value);
     }

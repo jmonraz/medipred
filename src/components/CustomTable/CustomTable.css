@@ -11,7 +11,7 @@
     border-collapse: collapse;
     border-radius: 5px 5px 0px 0px;
     overflow: hidden;
-    margin: 5px 0px;
+    padding: 5px 0px;
     table-layout: auto;
 }
 
@@ -47,11 +47,12 @@
 
 .custom-table tbody tr:not(.selected-row):hover {
     background-color: #d9d8d8;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .selected-row {
     background-color: #A2FF86;
-    color: black;
-    font-size: 14px;
+    color: rgb(54, 54, 54);
+    font-weight: 500;
+    font-size: 15px;
 }
