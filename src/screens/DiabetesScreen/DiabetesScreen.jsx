@@ -144,8 +144,6 @@ const DiabetesScreen = () => {
 
     const handleExportCSV = () => {
         let rows = filteredPatientData.length > 0 ? filteredPatientData : patientData;
-        console.log(filteredPatientData);
-        console.log(rows);
         const csvData = [
             columns,
             ...rows.map(patient => [

@@ -150,13 +150,10 @@ const PatientsScreen = () => {
         saveAs(blob, 'patients.csv');
     };
 
-
-
     const getData = async () => {
         try {
             const response = await fetch("http://127.0.0.1:8000/api/v1/patients/");
             const data = await response.json();
-            console.log(data);
             setPatientFullData(data.patients);
             const formattedData = formatData(data.patients);
             setPatientData(formattedData);
