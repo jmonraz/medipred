@@ -19,6 +19,7 @@ import reloadIcon from "../../assets/images/icons/reload_grey_icon.png";
 
 // utils
 import { snakeCase } from "lodash";
+import { saveAs } from "file-saver";
 
 
 const PatientsScreen = () => {
@@ -41,7 +42,18 @@ const PatientsScreen = () => {
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-
+    const buttons = [
+        { 'icon': addIcon, 'label': 'add' },
+        { 'icon': editIcon, 'label': 'edit' },
+        { 'icon': blockIcon, 'label': 'block' },
+        { 'icon': searchIcon, 'label': 'search' },
+        { 'icon': excelIcon, 'label': 'excel' },
+        { 'icon': adobeIcon, 'label': 'adobe' },
+        { 'icon': reloadIcon, 'label': 'reload' },
+    ];
+    const columns = [
+        'First Name', 'Last Name', 'Height', 'Weight', 'Blood Group', 'Date Of Birth', 'Contact Email'
+    ];
 
     useEffect(() => {
         getData();
@@ -83,6 +95,9 @@ const PatientsScreen = () => {
             };
             blockUser();
         }
+        if (label === 'excel') {
+            handleExportCSV();
+        }
         if (label === 'reload') {
             setIsDataLoaded(false);
             setFilteredPatientData([]);
@@ -115,18 +130,27 @@ const PatientsScreen = () => {
         patientRef.current = "";
     }
 
-    const buttons = [
-        { 'icon': addIcon, 'label': 'add' },
-        { 'icon': editIcon, 'label': 'edit' },
-        { 'icon': blockIcon, 'label': 'block' },
-        { 'icon': searchIcon, 'label': 'search' },
-        { 'icon': excelIcon, 'label': 'excel' },
-        { 'icon': adobeIcon, 'label': 'adobe' },
-        { 'icon': reloadIcon, 'label': 'reload' },
-    ];
-    const columns = [
-        'First Name', 'Last Name', 'Height', 'Weight', 'Blood Group', 'Date Of Birth', 'Contact Email'
-    ];
+    const handleExportCSV = () => {
+        let rows = filteredPatientData.length > 0 ? filteredPatientData : patientData;
+        const csvData = [
+            columns,
+            ...rows.map(patient => [
+                patient.firstName,
+                patient.lastName,
+                patient.height,
+                patient.weight,
+                patient.bloodGroup,
+                patient.dateOfBirth,
+                patient.email,
+            ]),
+        ];
+
+        const csvContent = csvData.map(row => row.join(',')).join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+        saveAs(blob, 'patients.csv');
+    };
+
+
 
     const getData = async () => {
         try {
