@@ -15,10 +15,10 @@ import blockIcon from "../../assets/images/icons/block_icon_red.png";
 import searchIcon from "../../assets/images/icons/search_icon_black.png";
 import excelIcon from "../../assets/images/icons/excel_icon_green.png";
 import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
+import reloadIcon from "../../assets/images/icons/reload_grey_icon.png";
 
 // utils
 import { snakeCase } from "lodash";
-import { isDisabled } from "@testing-library/user-event/dist/utils";
 
 
 const PatientsScreen = () => {
@@ -45,7 +45,7 @@ const PatientsScreen = () => {
 
     useEffect(() => {
         getData();
-    }, [])
+    }, [isDataLoaded])
 
     const handleButtonClicked = label => {
         if (label === 'add') {
@@ -83,6 +83,10 @@ const PatientsScreen = () => {
             };
             blockUser();
         }
+        if (label === 'reload') {
+            setIsDataLoaded(false);
+            setFilteredPatientData([]);
+        }
     }
     const handleCloseAdd = () => {
         setIsAddOpen(false);
@@ -118,6 +122,7 @@ const PatientsScreen = () => {
         { 'icon': searchIcon, 'label': 'search' },
         { 'icon': excelIcon, 'label': 'excel' },
         { 'icon': adobeIcon, 'label': 'adobe' },
+        { 'icon': reloadIcon, 'label': 'reload' },
     ];
     const columns = [
         'First Name', 'Last Name', 'Height', 'Weight', 'Blood Group', 'Date Of Birth', 'Contact Email'

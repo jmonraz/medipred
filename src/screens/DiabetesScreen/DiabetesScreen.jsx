@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 
 // components
 import ButtonsRow from "../../components/ButtonsRow";
@@ -15,6 +15,9 @@ import searchIcon from "../../assets/images/icons/search_icon_black.png";
 import excelIcon from "../../assets/images/icons/excel_icon_green.png";
 import adobeIcon from "../../assets/images/icons/adobe_icon_red.png";
 import reloadIcon from "../../assets/images/icons/reload_grey_icon.png";
+
+// utils
+import { saveAs } from "file-saver";
 
 
 const DiabetesScreen = () => {
@@ -65,9 +68,10 @@ const DiabetesScreen = () => {
     }
 
     useEffect(() => {
-        setTimeout(() => {
-            getData();
-        }, 2000);
+        // setTimeout(() => {
+        //     getData();
+        // }, 2000);
+        getData();
     }, [isDataLoaded]);
 
     const formatData = (data) => {
@@ -95,6 +99,9 @@ const DiabetesScreen = () => {
         }
         if (label === 'search') {
             setIsSearchOpen(true);
+        }
+        if (label === 'excel') {
+            handleExportCSV();
         }
         if (label === 'reload') {
             setIsDataLoaded(false);
@@ -134,6 +141,31 @@ const DiabetesScreen = () => {
         setFilteredAnalysisData(filteredAnalysisData);
         console.log(filteredAnalysisData);
     }
+
+    const handleExportCSV = () => {
+        let rows = filteredPatientData.length > 0 ? filteredPatientData : patientData;
+        console.log(filteredPatientData);
+        console.log(rows);
+        const csvData = [
+            columns,
+            ...rows.map(patient => [
+                patient.firstName,
+                patient.lastName,
+                patient.gender,
+                patient.age,
+                patient.glucose,
+                patient.bloodPressure,
+                patient.insulin,
+                patient.bmi,
+                patient.outcome,
+                patient.lastChecked,
+            ]),
+        ];
+
+        const csvContent = csvData.map(row => row.join(',')).join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+        saveAs(blob, 'diabetes_analysis.csv');
+    };
 
     const renderComponent = () => {
         if (!isDataLoaded) {
