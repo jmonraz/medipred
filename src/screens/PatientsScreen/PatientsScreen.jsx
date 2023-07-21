@@ -156,6 +156,7 @@ const PatientsScreen = () => {
             const data = await response.json();
             setPatientFullData(data.patients);
             const formattedData = formatData(data.patients);
+            const sortedData = sortByAlphabetic(formattedData);
             setPatientData(formattedData);
             setIsDataLoaded(true);
         } catch (error) {
@@ -213,6 +214,33 @@ const PatientsScreen = () => {
         addressIdRef.current = patientRef.current[0]['address'];
         getAddress();
     }
+
+    const sortByAlphabetic = (list) => {
+        list.sort((a, b) => {
+            const lastNameA = a.lastName.toLowerCase();
+            const lastNameB = b.lastName.toLowerCase();
+
+            if (lastNameA < lastNameB) {
+                return -1;
+            } else if (lastNameA > lastNameB) {
+                return 1;
+            } else {
+                const firstNameA = a.firstName.toLowerCase();
+                const firstNameB = b.firstName.toLowerCase();
+
+                if (firstNameA < firstNameB) {
+                    return -1;
+                } else if (firstNameA > firstNameB) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+
+        return list;
+    };
+
 
     useEffect(() => {
         if (updatedPopup) {
