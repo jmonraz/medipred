@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import LoginForm from "./screens/LoginForm/LoginForm";
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
 
-import './App.css'
+import './App.css';
 
 const App = () => {
   const { authenticated } = useContext(UserContext);
