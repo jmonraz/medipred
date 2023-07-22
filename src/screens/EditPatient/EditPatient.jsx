@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import InputField from "../../components/InputField";
 import FieldBox from "../../components/FieldBox";
 import { snakeCase } from "lodash";
@@ -26,6 +26,8 @@ const EditPatient = ({ onClose, patientData, addressData, onUpdate }) => {
 
 
     useEffect(() => {
+        setGender(patientData.gender);
+        setDateOfBirth(patientData.dateOfBirth);
         if (addressData.length > 0) {
             setAddress1(addressData[0]['address1']);
             setAddress2(addressData[0]['address2']);
@@ -35,7 +37,7 @@ const EditPatient = ({ onClose, patientData, addressData, onUpdate }) => {
             setPostalCode(addressData[0]['postalCode']);
             setCountry(addressData[0]['country']);
         }
-    }, []);
+    }, [addressData]);
 
     const handleFirstNameChange = event => {
         setFirstName(event.target.value);
