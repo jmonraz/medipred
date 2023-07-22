@@ -11,6 +11,7 @@ const SearchScreen = ({ getPatientData, onClose }) => {
     const [filteredPatientData, setFilteredPatientData] = React.useState([]);
 
     React.useEffect(() => {
+        console.log(isDataLoaded);s
         getData();
     }, [])
 

@@ -2,7 +2,6 @@ import React from "react";
 
 // components
 import OverlayBox from "../../components/OverlayBox";
-import { render } from "@testing-library/react";
 
 const ReportsScreen = () => {
 
