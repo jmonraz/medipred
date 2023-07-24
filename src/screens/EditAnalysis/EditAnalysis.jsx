@@ -4,7 +4,6 @@ import FieldBox from "../../components/FieldBox";
 import { snakeCase } from "lodash";
 
 const EditPatientInfo = ({ onClose, patientData, analysisData, onUpdate }) => {
-    const analysisIdRef = React.useRef("");
 
     const [firstName, setFirstName] = React.useState(patientData.firstName);
     const [middleName, setMiddleName] = React.useState(patientData.middleName);

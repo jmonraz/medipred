@@ -59,6 +59,7 @@ const DiabetesScreen = () => {
             setAnalysisData(fullData);
             console.log(fullData);
             const formattedData = formatData(data.data);
+            const sortedData = sortByAlphabetic(formattedData);
             setPatientData(formattedData);
             setIsDataLoaded(true);
         } catch (error) {
@@ -89,6 +90,32 @@ const DiabetesScreen = () => {
             lastChecked: data.last_checked,
         }))
     }
+
+    const sortByAlphabetic = (list) => {
+        list.sort((a, b) => {
+            const lastNameA = a.lastName.toLowerCase();
+            const lastNameB = b.lastName.toLowerCase();
+
+            if (lastNameA < lastNameB) {
+                return -1;
+            } else if (lastNameA > lastNameB) {
+                return 1;
+            } else {
+                const firstNameA = a.firstName.toLowerCase();
+                const firstNameB = b.firstName.toLowerCase();
+
+                if (firstNameA < firstNameB) {
+                    return -1;
+                } else if (firstNameA > firstNameB) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+
+        return list;
+    };
 
     const handleButtonClicked = label => {
         if (label === 'add') {

@@ -157,7 +157,7 @@ const PatientsScreen = () => {
             setPatientFullData(data.patients);
             const formattedData = formatData(data.patients);
             const sortedData = sortByAlphabetic(formattedData);
-            setPatientData(formattedData);
+            setPatientData(sortedData);
             setIsDataLoaded(true);
         } catch (error) {
             console.log(error);
