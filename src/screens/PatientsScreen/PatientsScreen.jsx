@@ -30,6 +30,7 @@ const PatientsScreen = () => {
 
     const [disabledPopup, setDisabledPopup] = useState(false);
     const [updatedPopup, setUpdatedPopup] = useState(false);
+    const [createdPopup, setCreatedPopup] = useState(false);
 
     const [patientData, setPatientData] = useState([]);
     const [patientFullData, setPatientFullData] = useState([]);
@@ -115,6 +116,7 @@ const PatientsScreen = () => {
     }
     const handleCreatePatientButton = item => {
         setIsAddOpen(false);
+        setCreatedPopup(true);
         getData();
     }
     const handleUpdatePatientButton = item => {
@@ -258,6 +260,14 @@ const PatientsScreen = () => {
         }
     }, [disabledPopup]);
 
+    useEffect(() => {
+        if (createdPopup) {
+            setTimeout(() => {
+                setCreatedPopup(false);
+            }, 2000);
+        }
+    }, [createdPopup]);
+
     const renderComponent = () => {
         if (!isDataLoaded) {
             return <div>Loading...</div>
@@ -295,6 +305,11 @@ const PatientsScreen = () => {
                     {updatedPopup && (
                         <div className="popup-message">
                             <p>Patient updated.</p>
+                        </div>
+                    )}
+                    {createdPopup && (
+                        <div className="popup-message">
+                            <p>Patient created.</p>
                         </div>
                     )}
                 </div>

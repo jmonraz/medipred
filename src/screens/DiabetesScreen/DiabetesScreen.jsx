@@ -22,6 +22,8 @@ import { saveAs } from "file-saver";
 
 const DiabetesScreen = () => {
 
+    const [createdPopup, setCreatedPopup] = React.useState(false);
+
     const patientRef = React.useRef("");
 
     const [patientData, setPatientData] = React.useState([]);
@@ -60,7 +62,7 @@ const DiabetesScreen = () => {
             console.log(fullData);
             const formattedData = formatData(data.data);
             const sortedData = sortByAlphabetic(formattedData);
-            setPatientData(formattedData);
+            setPatientData(sortedData);
             setIsDataLoaded(true);
         } catch (error) {
             console.log(error);
@@ -141,6 +143,8 @@ const DiabetesScreen = () => {
     }
 
     const handleAnalyze = () => {
+        setCreatedPopup(true);
+        getData();
         setIsAddOpen(false);
     }
 
@@ -192,6 +196,14 @@ const DiabetesScreen = () => {
         saveAs(blob, 'diabetes_analysis.csv');
     };
 
+    useEffect(() => {
+        if (createdPopup) {
+            setTimeout(() => {
+                setCreatedPopup(false);
+            }, 2000);
+        };
+    });
+
     const renderComponent = () => {
         if (!isDataLoaded) {
             return (
@@ -225,6 +237,11 @@ const DiabetesScreen = () => {
                     )}
                     <ButtonsRow buttons={buttons} width={22} onClick={handleButtonClicked} />
                     <CustomTable data={filteredPatientData.length > 0 ? filteredPatientData : patientData} columns={columns} onRowDoubleClick={() => { }} onRowClick={handleRowClick} />
+                    {createdPopup && (
+                        <div className="popup-message">
+                            <p>Analysis completed.</p>
+                        </div>
+                    )}
                 </div>
             )
         }

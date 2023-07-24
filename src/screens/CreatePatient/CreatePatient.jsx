@@ -156,6 +156,7 @@ const CreatePatient = ({ onCreate, onClose }) => {
             }, 2000);
         }
     }, [requiredPopup]);
+
     return (
         <>
             <form onSubmit={handleSubmit} className="form-container">
