@@ -23,6 +23,7 @@ import { saveAs } from "file-saver";
 const DiabetesScreen = () => {
 
     const [createdPopup, setCreatedPopup] = React.useState(false);
+    const [updatedPopup, setUpdatedPopup] = React.useState(false);
 
     const patientRef = React.useRef("");
 
@@ -154,6 +155,7 @@ const DiabetesScreen = () => {
 
     const handleUpdateEdit = () => {
         setIsEditOpen(false);
+        setUpdatedPopup(true);
         getData();
     }
     const handleCloseSearch = () => {
@@ -204,6 +206,14 @@ const DiabetesScreen = () => {
         };
     });
 
+    useEffect(() => {
+        if (updatedPopup) {
+            setTimeout(() => {
+                setUpdatedPopup(false);
+            }, 2000);
+        };
+    });
+
     const renderComponent = () => {
         if (!isDataLoaded) {
             return (
@@ -240,6 +250,11 @@ const DiabetesScreen = () => {
                     {createdPopup && (
                         <div className="popup-message">
                             <p>Analysis completed.</p>
+                        </div>
+                    )}
+                    {updatedPopup && (
+                        <div className="popup-message">
+                            <p>Analysis updated.</p>
                         </div>
                     )}
                 </div>
